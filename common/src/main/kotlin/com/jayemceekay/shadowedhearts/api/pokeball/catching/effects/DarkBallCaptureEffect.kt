@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.api.pokeball.catching.effects
 
 import com.cobblemon.mod.common.api.pokeball.catching.CaptureEffect
 import com.cobblemon.mod.common.pokemon.Pokemon
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
 import net.minecraft.world.entity.LivingEntity
 
 class DarkBallCaptureEffect : CaptureEffect {

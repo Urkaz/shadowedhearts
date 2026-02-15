@@ -1,6 +1,6 @@
 package com.jayemceekay.shadowedhearts.client.render.armor;
 
-import com.jayemceekay.shadowedhearts.core.ModItems;
+import com.jayemceekay.shadowedhearts.registry.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;

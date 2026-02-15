@@ -2,11 +2,11 @@ package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.item.PokeBallItem;
 import com.cobblemon.mod.common.pokeball.PokeBall;
+import com.jayemceekay.shadowedhearts.common.snag.SnagCaps;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.core.ModCreativeTabs;
 import com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork;
-import com.jayemceekay.shadowedhearts.network.SnagArmedPacket;
-import com.jayemceekay.shadowedhearts.snag.SnagCaps;
+import com.jayemceekay.shadowedhearts.network.snag.SnagArmedPacket;
+import com.jayemceekay.shadowedhearts.registry.ModCreativeTabs;
 import dev.architectury.registry.CreativeTabRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;

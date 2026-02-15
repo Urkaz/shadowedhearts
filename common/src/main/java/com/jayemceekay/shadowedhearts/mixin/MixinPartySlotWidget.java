@@ -2,8 +2,8 @@ package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.PartySlotWidget;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
 import com.jayemceekay.shadowedhearts.Shadowedhearts;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.resources.ResourceLocation;

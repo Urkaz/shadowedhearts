@@ -1,8 +1,8 @@
 package com.jayemceekay.shadowedhearts.client.sound;
 
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.core.ModBlocks;
-import com.jayemceekay.shadowedhearts.core.ModSounds;
+import com.jayemceekay.shadowedhearts.registry.ModBlocks;
+import com.jayemceekay.shadowedhearts.registry.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.BlockPos;

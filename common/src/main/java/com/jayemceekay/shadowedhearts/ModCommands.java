@@ -1,5 +1,6 @@
 package com.jayemceekay.shadowedhearts;
 
+import com.jayemceekay.shadowedhearts.common.command.ShadowedHeartsCommands;
 import com.mojang.brigadier.CommandDispatcher;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import net.minecraft.commands.CommandBuildContext;

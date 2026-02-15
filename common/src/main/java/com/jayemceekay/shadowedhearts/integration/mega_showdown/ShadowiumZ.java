@@ -5,7 +5,7 @@ import com.github.yajatkaul.mega_showdown.components.MegaShowdownDataComponents;
 import com.github.yajatkaul.mega_showdown.item.custom.z.ElementalZCrystal;
 import com.github.yajatkaul.mega_showdown.utils.RegistryLocator;
 import com.jayemceekay.shadowedhearts.Shadowedhearts;
-import com.jayemceekay.shadowedhearts.core.ModCreativeTabs;
+import com.jayemceekay.shadowedhearts.registry.ModCreativeTabs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 

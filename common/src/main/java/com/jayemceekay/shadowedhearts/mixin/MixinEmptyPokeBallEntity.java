@@ -11,7 +11,10 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonServerDelegate;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleCaptureStartPacket;
 import com.cobblemon.mod.common.pokemon.properties.UncatchableProperty;
 import com.google.common.collect.Iterables;
-import com.jayemceekay.shadowedhearts.SHAspects;
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects;
+import com.jayemceekay.shadowedhearts.common.snag.SnagCaps;
+import com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork;
+import com.jayemceekay.shadowedhearts.network.snag.SnagArmedPacket;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import kotlin.Unit;
@@ -117,10 +120,10 @@ public abstract class MixinEmptyPokeBallEntity extends ThrowableItemProjectile {
                                     ).withStyle(ChatFormatting.YELLOW));
                             battle.sendUpdate(new BattleCaptureStartPacket(((EmptyPokeBallEntity) (Object) this).getPokeBall().getName(), ((EmptyPokeBallEntity) (Object) this).getAspects(), hitBattlePokemon.getPNX()));
                             if (owner instanceof ServerPlayer sp) {
-                                var cap = com.jayemceekay.shadowedhearts.snag.SnagCaps.get(sp);
+                                var cap = SnagCaps.get(sp);
                                 if (cap.isArmed()) {
                                     cap.setArmed(false);
-                                    com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork.sendToPlayer(sp, new com.jayemceekay.shadowedhearts.network.SnagArmedPacket(false));
+                                   ShadowedHeartsNetwork.sendToPlayer(sp, new SnagArmedPacket(false));
                                 }
                             }
                             throwerActor.forceChoose(PassActionResponse.INSTANCE);

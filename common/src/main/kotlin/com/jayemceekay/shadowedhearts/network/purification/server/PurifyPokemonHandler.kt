@@ -3,11 +3,11 @@ package com.jayemceekay.shadowedhearts.network.purification.server
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.mark.Marks
 import com.cobblemon.mod.common.api.net.ServerNetworkPacketHandler
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil
-import com.jayemceekay.shadowedhearts.ShadowService
 import com.jayemceekay.shadowedhearts.advancements.ModCriteriaTriggers
-import com.jayemceekay.shadowedhearts.network.purification.PokemonPurifiedPacket
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowService
 import com.jayemceekay.shadowedhearts.network.purification.PurifyPokemonPacket
+import com.jayemceekay.shadowedhearts.network.purification.client.PokemonPurifiedPacket
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberPosition
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberStore
 import net.minecraft.resources.ResourceLocation

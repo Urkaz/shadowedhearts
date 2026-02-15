@@ -4,6 +4,7 @@ import com.jayemceekay.shadowedhearts.Shadowedhearts;
 import com.jayemceekay.shadowedhearts.config.ModConfig;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
 import com.jayemceekay.shadowedhearts.config.SnagConfig;
+import com.jayemceekay.shadowedhearts.neoforge.net.ShadowedHeartsNeoForgeNetworkRegistrar;
 import com.jayemceekay.shadowedhearts.neoforge.worldgen.ShadowedHeartsBiomeModifiers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -21,6 +22,7 @@ public final class ShadowedheartsNeoForge {
         modEventBus.addListener(ShadowedheartsNeoForge::onConfigLoading);
         modEventBus.addListener(ShadowedheartsNeoForge::onConfigReloading);
         modEventBus.addListener(ShadowedHeartsBiomeModifiers::register);
+        modEventBus.addListener(ShadowedHeartsNeoForgeNetworkRegistrar::registerMessages);
 
         Shadowedhearts.featureAdder = ShadowedHeartsBiomeModifiers::add;
 

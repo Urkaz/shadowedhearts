@@ -1,7 +1,7 @@
 package com.jayemceekay.shadowedhearts.client.aura;
 
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.core.ModSounds;
+import com.jayemceekay.shadowedhearts.registry.ModSounds;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;

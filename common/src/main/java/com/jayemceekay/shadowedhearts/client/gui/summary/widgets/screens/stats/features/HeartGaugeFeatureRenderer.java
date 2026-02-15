@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.client.gui.summary.widgets.screens.stats.
 
 import com.cobblemon.mod.common.client.gui.summary.featurerenderers.BarSummarySpeciesFeatureRenderer;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

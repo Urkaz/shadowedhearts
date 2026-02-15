@@ -2,10 +2,11 @@ package com.jayemceekay.shadowedhearts.network.purification
 
 import com.cobblemon.mod.common.api.net.NetworkPacket
 import com.cobblemon.mod.common.api.storage.pc.PCPosition
-import com.cobblemon.mod.common.util.cobblemonResource
 import com.cobblemon.mod.common.util.readPCPosition
 import com.cobblemon.mod.common.util.writePCPosition
+import com.jayemceekay.shadowedhearts.Shadowedhearts
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.resources.ResourceLocation
 import java.util.*
 
 /**
@@ -19,7 +20,7 @@ class MovePurificationToPCPacket(
     val setIndex: Int,
     val pcPosition: PCPosition
 ) : NetworkPacket<MovePurificationToPCPacket> {
-    override val id = ID
+    override val id: ResourceLocation = ID
 
     override fun encode(buffer: RegistryFriendlyByteBuf) {
         buffer.writeUUID(purificationStoreID)
@@ -29,7 +30,7 @@ class MovePurificationToPCPacket(
     }
 
     companion object {
-        val ID = cobblemonResource("shadowedhearts/move_purification_to_pc")
+        val ID: ResourceLocation = ResourceLocation.fromNamespaceAndPath(Shadowedhearts.MOD_ID, "move_purification_to_pc")
         fun decode(buffer: RegistryFriendlyByteBuf) = MovePurificationToPCPacket(
             buffer.readUUID(),
             buffer.readInt(),

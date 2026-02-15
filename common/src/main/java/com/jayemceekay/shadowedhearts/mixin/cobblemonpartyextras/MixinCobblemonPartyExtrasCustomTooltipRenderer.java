@@ -9,8 +9,8 @@ import com.cobblemon.mod.common.client.gui.summary.widgets.screens.moves.MoveSlo
 import com.cobblemon.mod.common.client.gui.summary.widgets.screens.moves.MoveSwapScreen;
 import com.cobblemon.mod.common.client.gui.summary.widgets.screens.moves.MovesWidget;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.Shadowedhearts;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.jayemceekay.shadowedhearts.mixin.MovesWidgetAccessor;
 import com.jayemceekay.shadowedhearts.mixin.SummaryAccessor;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
@@ -59,7 +59,7 @@ public abstract class MixinCobblemonPartyExtrasCustomTooltipRenderer {
         Screen currentScreen = mc.screen;
         if (currentScreen instanceof Summary summary) {
             Pokemon pokemon = summary.getSelectedPokemon$common();
-            if (pokemon == null || !ShadowGate.isShadowLockedClient(pokemon)) {
+            if (pokemon == null || !ShadowAspectUtil.hasShadowAspect(pokemon)) {
                 return false;
             }
 
@@ -91,12 +91,12 @@ public abstract class MixinCobblemonPartyExtrasCustomTooltipRenderer {
 
     private static boolean shadowedhearts$isMoveMasked(Move m, Pokemon pokemon) {
         if (m == null) return false;
-        if (ShadowGate.isShadowMoveId(m.getTemplate().getName())) return false;
+        if (m.getType() == Shadowedhearts.SH_SHADOW_TYPE) return false;
 
         int nonShadowIndex = 0;
         int allowed = ShadowAspectUtil.getAllowedVisibleNonShadowMoves(pokemon);
         for (Move mv : pokemon.getMoveSet().getMovesWithNulls()) {
-            if (mv == null || ShadowGate.isShadowMoveId(mv.getName())) continue;
+            if (mv == null || mv.getType() == Shadowedhearts.SH_SHADOW_TYPE) continue;
             if (mv == m) return nonShadowIndex >= allowed;
             nonShadowIndex++;
         }
@@ -106,12 +106,12 @@ public abstract class MixinCobblemonPartyExtrasCustomTooltipRenderer {
 
     private static boolean shadowedhearts$isTemplateMasked(MoveTemplate t, Pokemon pokemon) {
         if (t == null) return false;
-        if (ShadowGate.isShadowMoveId(t.getName())) return false;
+        if (t.getElementalType() == Shadowedhearts.SH_SHADOW_TYPE) return false;
 
         int nonShadowIndex = 0;
         int allowed = ShadowAspectUtil.getAllowedVisibleNonShadowMoves(pokemon);
         for (Move mv : pokemon.getMoveSet().getMovesWithNulls()) {
-            if (mv == null || ShadowGate.isShadowMoveId(mv.getName())) continue;
+            if (mv == null || mv.getType() == Shadowedhearts.SH_SHADOW_TYPE) continue;
             if (mv.getTemplate() == t) return nonShadowIndex >= allowed;
             nonShadowIndex++;
         }

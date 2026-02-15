@@ -3,7 +3,7 @@ package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.client.gui.summary.widgets.screens.info.InfoWidget;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;

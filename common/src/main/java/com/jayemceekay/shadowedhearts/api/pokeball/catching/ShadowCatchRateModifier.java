@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.api.pokeball.catching;
 
 import com.cobblemon.mod.common.api.pokeball.catching.CatchRateModifier;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.SHAspects;
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects;
 import com.jayemceekay.shadowedhearts.config.HeartGaugeConfig;
 import com.jayemceekay.shadowedhearts.config.IShadowConfig;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;

@@ -1,6 +1,6 @@
 package com.jayemceekay.shadowedhearts.integration.accessories;
 
-import com.jayemceekay.shadowedhearts.core.ModItems;
+import com.jayemceekay.shadowedhearts.registry.ModItems;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

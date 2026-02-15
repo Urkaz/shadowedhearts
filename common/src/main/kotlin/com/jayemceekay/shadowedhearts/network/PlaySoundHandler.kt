@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.network
 
 import com.cobblemon.mod.common.api.net.ClientNetworkPacketHandler
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs
-import com.jayemceekay.shadowedhearts.core.ModSounds
+import com.jayemceekay.shadowedhearts.registry.ModSounds
 import net.minecraft.client.Minecraft
 import net.minecraft.core.registries.BuiltInRegistries
 

@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.client.purification
 
 import com.cobblemon.mod.common.api.types.ElementalType
 import com.cobblemon.mod.common.pokemon.Pokemon
-import com.jayemceekay.shadowedhearts.storage.purification.PurificationMath
+import com.jayemceekay.shadowedhearts.common.purification.PurificationMath
 
 /**
  * Client-side helpers to compute Purification Chamber flow/tempo percentages

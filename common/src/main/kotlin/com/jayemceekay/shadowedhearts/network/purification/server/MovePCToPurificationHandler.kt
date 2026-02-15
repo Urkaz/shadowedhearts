@@ -3,7 +3,7 @@ package com.jayemceekay.shadowedhearts.network.purification.server
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.net.ServerNetworkPacketHandler
 import com.cobblemon.mod.common.api.storage.pc.PCPosition
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
 import com.jayemceekay.shadowedhearts.network.purification.MovePCToPurificationPacket
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberPosition
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberStore

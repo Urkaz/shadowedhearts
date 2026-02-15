@@ -3,8 +3,7 @@ package com.jayemceekay.shadowedhearts.mixin.cobblemonpartyextras;
 
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -23,22 +22,7 @@ public class MixinCobblemonPartyExtrasMoveTooltipBuilder {
     @Unique
     private static boolean shadowedhearts$shouldMask(MoveTemplate m, Pokemon pokemon) {
         if (m == null || pokemon == null) return false;
-        if (ShadowGate.isShadowMoveId(m.getName()))
-            return false; // Shadow moves always visible
-
-        // Compute this move's index among non-Shadow moves in move order
-        int nonShadowIndex = 0;
-        int allowed = ShadowAspectUtil.getAllowedVisibleNonShadowMoves(pokemon);
-        for (var mv : pokemon.getMoveSet().getMovesWithNulls()) {
-            if (mv == null) continue;
-            if (ShadowGate.isShadowMoveId(mv.getName())) continue;
-            if (mv.getTemplate() == m) {
-                // If this move's position is at or beyond allowed, mask it
-                return nonShadowIndex >= allowed;
-            }
-            nonShadowIndex++;
-        }
-        return false;
+        return ShadowAspectUtil.shouldMaskMove(pokemon, m.getName());
     }
 
 

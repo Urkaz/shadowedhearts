@@ -11,13 +11,13 @@ import com.cobblemon.mod.common.client.render.models.blockbench.FloatingState
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.cobblemonResource
 import com.cobblemon.mod.common.util.math.fromEulerXYZDegrees
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil
 import com.jayemceekay.shadowedhearts.Shadowedhearts
 import com.jayemceekay.shadowedhearts.client.ModShaders
 import com.jayemceekay.shadowedhearts.client.aura.AuraEmitters
 import com.jayemceekay.shadowedhearts.client.purification.PurificationClientMetrics
 import com.jayemceekay.shadowedhearts.client.storage.ClientPurificationStorage
-import com.jayemceekay.shadowedhearts.storage.purification.PurificationMath
+import com.jayemceekay.shadowedhearts.common.purification.PurificationMath
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
 import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.BufferUploader
 import com.mojang.blaze3d.vertex.DefaultVertexFormat

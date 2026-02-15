@@ -1,9 +1,10 @@
 package com.jayemceekay.shadowedhearts.mixin;
 
+import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.battles.InBattleMove;
 import com.cobblemon.mod.common.battles.ShowdownMoveset;
 import com.cobblemon.mod.common.battles.ShowdownMovesetAdapter;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.Shadowedhearts;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import kotlin.Unit;
@@ -49,7 +50,7 @@ public abstract class MixinShowdownMovesetAdapter {
     private List<InBattleMove> shadowedhearts$getFilteredMoves(List<InBattleMove> moves) {
         List<InBattleMove> filteredMoves = new ArrayList<>();
         for (InBattleMove move : moves) {
-            if (!ShadowGate.isShadowMoveId(move.getId())) {
+            if (!(Moves.getByName(move.getMove()).getElementalType() == Shadowedhearts.SH_SHADOW_TYPE)) {
                 filteredMoves.add(move);
             }
         }

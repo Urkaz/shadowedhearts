@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.pokemon.properties;
 
 import com.cobblemon.mod.common.api.properties.CustomPokemonProperty;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 
 public class ScentCooldownProperty implements CustomPokemonProperty {
     private final long lastUseTime;

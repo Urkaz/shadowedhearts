@@ -3,9 +3,9 @@ package com.jayemceekay.shadowedhearts.cobblemon.instructions
 import com.cobblemon.mod.common.api.battles.interpreter.BattleMessage
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.battles.dispatch.InterpreterInstruction
-import com.jayemceekay.shadowedhearts.SHAspects
+import com.jayemceekay.shadowedhearts.common.heart.HeartGaugeEvents
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs
-import com.jayemceekay.shadowedhearts.heart.HeartGaugeEvents
 
 /**
  * Format: |call|PNX

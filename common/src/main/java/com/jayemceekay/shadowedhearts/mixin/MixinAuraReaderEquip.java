@@ -1,7 +1,7 @@
 package com.jayemceekay.shadowedhearts.mixin;
 
-import com.jayemceekay.shadowedhearts.core.ModItems;
 import com.jayemceekay.shadowedhearts.integration.accessories.SnagAccessoryBridgeHolder;
+import com.jayemceekay.shadowedhearts.registry.ModItems;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;

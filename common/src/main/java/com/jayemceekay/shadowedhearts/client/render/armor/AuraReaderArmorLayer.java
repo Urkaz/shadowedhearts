@@ -1,7 +1,7 @@
 package com.jayemceekay.shadowedhearts.client.render.armor;
 
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.items.AuraReaderItem;
+import com.jayemceekay.shadowedhearts.content.items.AuraReaderItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;

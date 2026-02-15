@@ -3,7 +3,7 @@ package com.jayemceekay.shadowedhearts.mixin.cobblemonpartyextras;
 
 import com.cobblemon.mod.common.client.gui.summary.Summary;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class MixinCobblemonPartyExtrasMoveTooltipHelper {
         Screen currentScreen = mc.screen;
         if (currentScreen instanceof Summary summary) {
             Pokemon pokemon = summary.getSelectedPokemon$common();
-            return ShadowGate.isShadowLockedClient(pokemon);
+            return ShadowAspectUtil.hasShadowAspect(pokemon);
         }
         return true;
     }

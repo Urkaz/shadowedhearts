@@ -3,7 +3,7 @@ package com.jayemceekay.shadowedhearts.client.neoforge;
 import com.jayemceekay.shadowedhearts.client.integration.accessories.AuraReaderAccessoryRenderer;
 import com.jayemceekay.shadowedhearts.client.integration.accessories.SnagMachineAdvancedAccessoryRenderer;
 import com.jayemceekay.shadowedhearts.client.integration.accessories.SnagMachinePrototypeAccessoryRenderer;
-import com.jayemceekay.shadowedhearts.core.ModItems;
+import com.jayemceekay.shadowedhearts.registry.ModItems;
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry;
 
 public class AccessoriesRendererBridge {

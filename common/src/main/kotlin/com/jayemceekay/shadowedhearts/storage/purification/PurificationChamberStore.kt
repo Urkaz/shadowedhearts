@@ -7,10 +7,9 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.DataKeys
 import com.cobblemon.mod.common.util.getPlayer
 import com.google.gson.JsonObject
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil
-import com.jayemceekay.shadowedhearts.ShadowService
-import com.jayemceekay.shadowedhearts.client.net.storage.purification.PurificationChamberSyncPacket
-import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs
+import com.jayemceekay.shadowedhearts.common.purification.ChamberLogic
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
+import com.jayemceekay.shadowedhearts.network.purification.client.PurificationChamberSyncPacket
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
@@ -188,6 +187,12 @@ class PurificationChamberStore(
         return if (position.isShadow) set.shadow else set.supports.getOrNull(position.index)
     }
 
+    fun getShadow(setIndex: Int): Pokemon? = sets.getOrNull(setIndex)?.shadow
+
+    fun getSupports(setIndex: Int): Array<Pokemon?> = sets.getOrNull(setIndex)?.supports ?: arrayOfNulls(SUPPORT_SLOTS)
+
+    fun getSupportRing(setIndex: Int): List<Pokemon> = getSupports(setIndex).filterNotNull()
+
     /**
      * Advance the chamber's purification cadence by a given number of steps.
      * Every X accumulated steps, compute and apply heart gauge reductions to each set's shadow.
@@ -196,43 +201,7 @@ class PurificationChamberStore(
      * Context: Minecraft Cobblemon mod; all shadow/purity/corruption terms are gameplay mechanics.
      */
     fun advanceSteps(steps: Int) {
-        if (steps <= 0) return
-        val stepRequirement = ShadowedHeartsConfigs.getInstance().shadowConfig.purificationChamberStepRequirement()
-        stepAccumulator += steps
-        val affectedPokemon = mutableSetOf<Pokemon>()
-        while (stepAccumulator >= stepRequirement) {
-            stepAccumulator -= stepRequirement
-            applyChamberTick(affectedPokemon)
-        }
-        affectedPokemon.forEach { ShadowService.syncAll(it) }
-    }
-
-    /** Compute perfect-set count and apply purification delta to each shadow per formula. */
-    private fun applyChamberTick(affectedPokemon: MutableSet<Pokemon>? = null) {
-        // Count perfect sets first
-        val perfectCount = sets.count { set ->
-            val ring = set.supports.filterNotNull()
-            PurificationMath.isPerfectSet(ring)
-        }
-
-        // Apply per-set
-        var anyChanged = false
-        sets.forEach { set ->
-            val delta = PurificationMath.computePurificationDeltaForSet(set.shadow, set.supports, perfectCount)
-            if (delta != 0 && set.shadow != null) {
-                val p = set.shadow!!
-                val cur = ShadowAspectUtil.getHeartGaugeMeter(p)
-                val next = cur + delta // delta negative opens heart
-                if (affectedPokemon != null) {
-                    ShadowService.setHeartGauge(p, null, next, false)
-                    affectedPokemon.add(p)
-                } else {
-                    ShadowService.setHeartGauge(p, null, next)
-                }
-                anyChanged = true
-            }
-        }
-        if (anyChanged) changeObservable.emit(Unit)
+        stepAccumulator = ChamberLogic.advanceSteps(this, steps, stepAccumulator)
     }
 
     override fun saveToNBT(nbt: CompoundTag, registryAccess: RegistryAccess): CompoundTag {

@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.entity.pokeball.EmptyPokeBallEntity;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import com.jayemceekay.shadowedhearts.SHAspects;
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;

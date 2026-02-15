@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.mixin.cobblemonbattleextras;
 
 import com.cobblemon.mod.common.battles.InBattleMove;
 import com.cobblemon.mod.common.client.gui.battle.subscreen.BattleMoveSelection;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.gui.GuiGraphics;
@@ -33,8 +33,6 @@ public abstract class CobblemonBattleExtrasNewMoveTileTooltipMixin {
         var pokemon = self.getPokemon();
         if (m == null || pokemon == null) return false;
 
-        return m.getDisabled()
-                && ShadowGate.isShadowLockedClient(pokemon)
-                && !ShadowGate.isShadowMoveId(m.getId());
+        return m.getDisabled() && ShadowAspectUtil.shouldMaskMove(pokemon, m.getId());
     }
 }

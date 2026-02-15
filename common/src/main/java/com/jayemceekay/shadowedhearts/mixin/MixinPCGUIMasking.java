@@ -2,12 +2,11 @@ package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.client.gui.pc.PCGUI;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.util.ShadowMaskingUtil;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -45,7 +44,7 @@ public abstract class MixinPCGUIMasking {
     )
     private MutableComponent shadowedhearts$maskNatureInPC(Pokemon pokemon, Operation<MutableComponent> original) {
         if (ShadowAspectUtil.isNatureHiddenByGauge(pokemon)) {
-            return Component.literal("????");
+            return ShadowMaskingUtil.MASKED_NATURE;
         }
         return original.call(pokemon);
     }
@@ -68,7 +67,7 @@ public abstract class MixinPCGUIMasking {
         String s = original.getString();
         // Numeric-only components in EV page represent the EV value display (including italic variant)
         if (s != null && s.matches("\\d{1,2}")) {
-            return Component.literal("??").copy().withStyle(st -> st.withBold(true));
+            return ShadowMaskingUtil.MASKED_STAT;
         }
         return original;
     }
@@ -91,7 +90,7 @@ public abstract class MixinPCGUIMasking {
         String s = original.getString();
         // Numeric-only components in IV page represent the IV value display (including italic variant)
         if (s != null && s.matches("\\d{1,2}")) {
-            return Component.literal("??").copy().withStyle(st -> st.withBold(true));
+            return ShadowMaskingUtil.MASKED_STAT;
         }
         return original;
     }
@@ -113,30 +112,8 @@ public abstract class MixinPCGUIMasking {
         try {
             if (pokemon == null) return original;
 
-            // Build list of up to 4 actual moves (no placeholders)
-            var moves = pokemon.getMoveSet().getMoves();
-            int realCount = Math.min(moves.size(), 4);
-
-            // If current index points to placeholder beyond real moves, keep original (it's the "—" text)
-            if (i >= realCount) return original;
-
-            // Determine if this move should be masked based on allowed visible non-Shadow moves
-            int allowed = ShadowAspectUtil.getAllowedVisibleNonShadowMoves(pokemon);
-
-            // Count non-shadow moves before the current index
-            int nonShadowIndex = 0;
-            for (int idx = 0; idx < i; idx++) {
-                var mv = moves.get(idx);
-                if (!ShadowGate.isShadowMoveId(mv.getName())) nonShadowIndex++;
-            }
-
-            var current = moves.get(i);
-            // Shadow moves are never masked
-            if (ShadowGate.isShadowMoveId(current.getName())) return original;
-
-            boolean mask = nonShadowIndex >= allowed;
-            if (mask) {
-                return Component.literal("???").copy().withStyle(s -> s.withBold(true));
+            if (ShadowAspectUtil.shouldMaskMove(pokemon, i)) {
+                return ShadowMaskingUtil.MASKED_NAME;
             }
         } catch (Throwable ignored) { }
         return original;

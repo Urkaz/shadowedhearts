@@ -1,8 +1,10 @@
 package com.jayemceekay.shadowedhearts.mixin.cobblemonbattleextras;
 
+import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.battles.InBattleMove;
 import com.cobblemon.mod.common.client.gui.battle.subscreen.BattleMoveSelection;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.Shadowedhearts;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.gui.GuiGraphics;
@@ -35,7 +37,7 @@ public abstract class CobblemonBattleExtras_1_7_24_MoveTileTooltipMixin {
         if (m == null || pokemon == null) return false;
 
         return m.getDisabled()
-                && ShadowGate.isShadowLockedClient(pokemon)
-                && !ShadowGate.isShadowMoveId(m.getId());
+                && ShadowAspectUtil.hasShadowAspect(pokemon)
+                && !(Moves.getByName(m.getMove()).getElementalType() == Shadowedhearts.SH_SHADOW_TYPE);
     }
 }

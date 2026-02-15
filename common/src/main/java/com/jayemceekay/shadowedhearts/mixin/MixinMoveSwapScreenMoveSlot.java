@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.client.gui.summary.Summary;
 import com.cobblemon.mod.common.client.gui.summary.widgets.screens.moves.MoveSwapScreen;
 import com.cobblemon.mod.common.client.gui.summary.widgets.screens.moves.MovesWidget;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -40,7 +40,7 @@ public abstract class MixinMoveSwapScreenMoveSlot {
         Summary summary = mw.getSummary();
         var pokemon = summary.getSelectedPokemon$common();
         if (pokemon == null) return false;
-        return ShadowGate.isShadowLockedClient(pokemon);
+        return ShadowAspectUtil.hasShadowAspect(pokemon);
     }
 
     // Mask move name (ordinal 0)

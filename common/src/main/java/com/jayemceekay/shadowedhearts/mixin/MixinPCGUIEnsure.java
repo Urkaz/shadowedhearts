@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.client.storage.ClientBox;
 import com.cobblemon.mod.common.client.storage.ClientPC;
 import com.cobblemon.mod.common.client.storage.ClientParty;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

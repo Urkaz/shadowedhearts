@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.api.pokemon.moves.LearnsetQuery;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.pokemon.FormData;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.jayemceekay.shadowedhearts.SHAspects;
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.sugar.Local;

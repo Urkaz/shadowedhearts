@@ -5,7 +5,7 @@ import com.cobblemon.mod.common.api.battles.model.actor.ActorType;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.battles.ShowdownActionRequest;
 import com.cobblemon.mod.common.battles.interpreter.instructions.RequestInstruction;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import kotlin.Unit;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,26 +47,20 @@ public abstract class MixinRequestInstruction {
             if (battlePokemon == null) continue;
             var effected = battlePokemon.getEffectedPokemon();
 
-            if (!com.jayemceekay.shadowedhearts.ShadowGate.isShadowLocked(effected)) continue;
+            if (!ShadowAspectUtil.hasShadowAspect(effected)) continue;
 
             var moveset = reqMovesets.get(i);
             if (moveset == null || moveset.getMoves() == null) continue;
-
-            int allowed = ShadowAspectUtil.getAllowedVisibleNonShadowMoves(effected);
-            int nonShadowIndex = 0;
 
             for (var m : moveset.getMoves()) {
                 if (m == null) continue;
                 String id = m.getId();
                 boolean forced = m.getMaxpp() == 100 && m.getPp() == 100; // Thrash/forced turn placeholder
                 if (forced || "struggle".equalsIgnoreCase(id)) continue;
-                if (!com.jayemceekay.shadowedhearts.ShadowGate.isShadowMoveId(id)) {
-                    if (nonShadowIndex >= allowed) {
-                        m.setDisabled(true);
-                        var gm = m.getGimmickMove();
-                        if (gm != null) gm.setDisabled(true);
-                    }
-                    nonShadowIndex++;
+                if (ShadowAspectUtil.shouldMaskMove(effected, id)) {
+                    m.setDisabled(true);
+                    var gm = m.getGimmickMove();
+                    if (gm != null) gm.setDisabled(true);
                 }
             }
         }

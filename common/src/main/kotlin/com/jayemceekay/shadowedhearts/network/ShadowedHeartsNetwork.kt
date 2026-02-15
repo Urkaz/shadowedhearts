@@ -2,9 +2,16 @@ package com.jayemceekay.shadowedhearts.network
 
 import com.cobblemon.mod.common.api.net.NetworkPacket
 import com.cobblemon.mod.common.net.PacketRegisterInfo
-import com.jayemceekay.shadowedhearts.client.net.storage.purification.*
 import com.jayemceekay.shadowedhearts.client.network.AuraScannerClientHandler
-import com.jayemceekay.shadowedhearts.network.purification.PokemonPurifiedPacket
+import com.jayemceekay.shadowedhearts.client.network.MeteoroidScanResultClientHandler
+import com.jayemceekay.shadowedhearts.network.aura.*
+import com.jayemceekay.shadowedhearts.network.purification.*
+import com.jayemceekay.shadowedhearts.network.purification.client.*
+import com.jayemceekay.shadowedhearts.network.purification.server.MovePCToPurificationHandler
+import com.jayemceekay.shadowedhearts.network.purification.server.MovePurificationToPCHandler
+import com.jayemceekay.shadowedhearts.network.purification.server.PurifyPokemonHandler
+import com.jayemceekay.shadowedhearts.network.purification.server.UnlinkPlayerFromPurificationChamberHandler
+import com.jayemceekay.shadowedhearts.network.snag.*
 import net.minecraft.server.level.ServerPlayer
 
 /**
@@ -26,9 +33,9 @@ object ShadowedHeartsNetwork {
         add(PacketRegisterInfo(SnagArmedPacket.ID, SnagArmedPacket::decode, SnagArmedHandler))
         add(PacketRegisterInfo(SnagEligibilityPacket.ID, SnagEligibilityPacket::decode, SnagEligibilityHandler))
         add(PacketRegisterInfo(SnagResultPacket.ID, SnagResultPacket::decode, SnagResultHandler))
-        add(PacketRegisterInfo(PokemonPropertyUpdatePacket.ID, PokemonPropertyUpdatePacket::decode, com.cobblemon.mod.common.client.net.pokemon.update.PokemonUpdatePacketHandler()))
+        add(PacketRegisterInfo(PokemonPropertyUpdatePacket.ID, PokemonPropertyUpdatePacket::decode, PokemonPropertyUpdateHandler))
         add(PacketRegisterInfo(AuraScannerS2CPacket.ID, AuraScannerS2CPacket::decode, AuraScannerClientHandler))
-        add(PacketRegisterInfo(MeteoroidScanResultPacket.ID, MeteoroidScanResultPacket::decode, com.jayemceekay.shadowedhearts.client.network.MeteoroidScanResultClientHandler))
+        add(PacketRegisterInfo(MeteoroidScanResultPacket.ID, MeteoroidScanResultPacket::decode, MeteoroidScanResultClientHandler))
         add(PacketRegisterInfo(PlaySoundPacket.ID, PlaySoundPacket::decode, PlaySoundHandler))
     }
 
@@ -39,30 +46,30 @@ object ShadowedHeartsNetwork {
     val c2sPayloads: List<PacketRegisterInfo<*>> = buildList {
         add(
             PacketRegisterInfo(
-                com.jayemceekay.shadowedhearts.network.purification.MovePCToPurificationPacket.ID,
-                com.jayemceekay.shadowedhearts.network.purification.MovePCToPurificationPacket::decode,
-                com.jayemceekay.shadowedhearts.network.purification.server.MovePCToPurificationHandler
+                MovePCToPurificationPacket.ID,
+                MovePCToPurificationPacket::decode,
+                MovePCToPurificationHandler
             )
         )
         add(
             PacketRegisterInfo(
-                com.jayemceekay.shadowedhearts.network.purification.MovePurificationToPCPacket.ID,
-                com.jayemceekay.shadowedhearts.network.purification.MovePurificationToPCPacket::decode,
-                com.jayemceekay.shadowedhearts.network.purification.server.MovePurificationToPCHandler
+                MovePurificationToPCPacket.ID,
+                MovePurificationToPCPacket::decode,
+                MovePurificationToPCHandler
             )
         )
         add(
             PacketRegisterInfo(
-                com.jayemceekay.shadowedhearts.network.purification.UnlinkPlayerFromPurificationChamberPacket.ID,
-                com.jayemceekay.shadowedhearts.network.purification.UnlinkPlayerFromPurificationChamberPacket::decode,
-                com.jayemceekay.shadowedhearts.network.purification.server.UnlinkPlayerFromPurificationChamberHandler
+                UnlinkPlayerFromPurificationChamberPacket.ID,
+                UnlinkPlayerFromPurificationChamberPacket::decode,
+                UnlinkPlayerFromPurificationChamberHandler
             )
         )
         add(
             PacketRegisterInfo(
-                com.jayemceekay.shadowedhearts.network.purification.PurifyPokemonPacket.ID,
-                com.jayemceekay.shadowedhearts.network.purification.PurifyPokemonPacket::decode,
-                com.jayemceekay.shadowedhearts.network.purification.server.PurifyPokemonHandler
+                PurifyPokemonPacket.ID,
+                PurifyPokemonPacket::decode,
+                PurifyPokemonHandler
             )
         )
         add(PacketRegisterInfo(SnagArmPacket.ID, SnagArmPacket::decode, SnagArmHandler))

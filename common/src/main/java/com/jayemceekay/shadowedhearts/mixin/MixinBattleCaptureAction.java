@@ -3,7 +3,7 @@ package com.jayemceekay.shadowedhearts.mixin;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.battles.BattleCaptureAction;
 import com.cobblemon.mod.common.battles.PassActionResponse;
-import com.jayemceekay.shadowedhearts.SHAspects;
+import com.jayemceekay.shadowedhearts.common.shadow.SHAspects;
 import com.jayemceekay.shadowedhearts.integration.mega_showdown.MegaShowdownBridgeHolder;
 import kotlin.Unit;
 import org.spongepowered.asm.mixin.Mixin;

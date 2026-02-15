@@ -3,8 +3,9 @@ package com.jayemceekay.shadowedhearts.mixin;
 import com.cobblemon.mod.common.client.gui.battle.BattleGUI;
 import com.cobblemon.mod.common.client.gui.battle.subscreen.BattleGeneralActionSelection;
 import com.cobblemon.mod.common.client.gui.battle.widgets.BattleOptionTile;
+import com.jayemceekay.shadowedhearts.common.snag.SnagBattleUtil;
 import com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork;
-import com.jayemceekay.shadowedhearts.network.SnagArmPacket;
+import com.jayemceekay.shadowedhearts.network.snag.SnagArmPacket;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import net.minecraft.client.Minecraft;
@@ -74,7 +75,7 @@ public abstract class MixinBattleGeneralActionSelection {
         var mc = Minecraft.getInstance();
         var player = mc.player;
         // Only show the Snag option when it is actually usable per our rules
-        if (player != null && com.jayemceekay.shadowedhearts.snag.SnagBattleUtil.canShowSnagButton(player)) {
+        if (player != null && SnagBattleUtil.canShowSnagButton(player)) {
             MutableComponent snagText = Component.literal("Snag");
             ResourceLocation snagIcon = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/battle/battle_menu_switch.png");
             Function0<Unit> snagClick = () -> {

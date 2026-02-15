@@ -1,18 +1,18 @@
 package com.jayemceekay.shadowedhearts.client.gui;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import com.jayemceekay.shadowedhearts.ShadowPokemonData;
-import com.jayemceekay.shadowedhearts.aura.AuraReaderCharge;
 import com.jayemceekay.shadowedhearts.client.ModKeybinds;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
+import com.jayemceekay.shadowedhearts.common.aura.AuraReaderCharge;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowPokemonData;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.core.ModSounds;
+import com.jayemceekay.shadowedhearts.content.items.AuraReaderItem;
 import com.jayemceekay.shadowedhearts.integration.accessories.SnagAccessoryBridgeHolder;
-import com.jayemceekay.shadowedhearts.items.AuraReaderItem;
-import com.jayemceekay.shadowedhearts.network.AuraPulsePacket;
-import com.jayemceekay.shadowedhearts.network.AuraScannerC2SPacket;
-import com.jayemceekay.shadowedhearts.network.MeteoroidScanRequestPacket;
 import com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork;
+import com.jayemceekay.shadowedhearts.network.aura.AuraPulsePacket;
+import com.jayemceekay.shadowedhearts.network.aura.AuraScannerC2SPacket;
+import com.jayemceekay.shadowedhearts.network.aura.MeteoroidScanRequestPacket;
+import com.jayemceekay.shadowedhearts.registry.ModSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;

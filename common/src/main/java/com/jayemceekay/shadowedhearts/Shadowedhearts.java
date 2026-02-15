@@ -7,25 +7,37 @@ import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.battles.runner.graal.GraalShowdownService;
 import com.cobblemon.mod.relocations.graalvm.polyglot.Context;
 import com.jayemceekay.shadowedhearts.advancements.ModCriteriaTriggers;
-import com.jayemceekay.shadowedhearts.aura.AuraReaderEvents;
+import com.jayemceekay.shadowedhearts.common.aura.AuraReaderEvents;
+import com.jayemceekay.shadowedhearts.common.event.battle.BattleSentOnceListener;
+import com.jayemceekay.shadowedhearts.common.event.battle.ShadowDropListener;
+import com.jayemceekay.shadowedhearts.common.event.player.PurificationStepTracker;
+import com.jayemceekay.shadowedhearts.common.event.pokemon.ShadowAspectValidator;
+import com.jayemceekay.shadowedhearts.common.shadow.NPCShadowInjector;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowProgressionManager;
+import com.jayemceekay.shadowedhearts.common.shadow.StarterShadowListener;
+import com.jayemceekay.shadowedhearts.common.shadow.WildShadowSpawnListener;
+import com.jayemceekay.shadowedhearts.common.shadow.restrictions.ShadowRestrictions;
+import com.jayemceekay.shadowedhearts.common.snag.ShadowCatchRateListener;
+import com.jayemceekay.shadowedhearts.common.snag.SnagEvents;
+import com.jayemceekay.shadowedhearts.common.util.SpeciesTagManager;
 import com.jayemceekay.shadowedhearts.config.HeartGaugeConfig;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.core.*;
 import com.jayemceekay.shadowedhearts.data.ShadowAspectPresets;
 import com.jayemceekay.shadowedhearts.data.ShadowPools;
 import com.jayemceekay.shadowedhearts.integration.accessories.SnagAccessoryBridgeHolder;
 import com.jayemceekay.shadowedhearts.integration.mega_showdown.MegaShowdownBridgeHolder;
+import com.jayemceekay.shadowedhearts.network.AuraBroadcastQueue;
+import com.jayemceekay.shadowedhearts.network.AuraServerSync;
 import com.jayemceekay.shadowedhearts.pokemon.properties.PropertyRegistration;
-import com.jayemceekay.shadowedhearts.restrictions.ShadowRestrictions;
-import com.jayemceekay.shadowedhearts.server.*;
-import com.jayemceekay.shadowedhearts.server.listeners.ShadowCatchRateListener;
-import com.jayemceekay.shadowedhearts.server.listeners.StarterShadowListener;
+import com.jayemceekay.shadowedhearts.registry.*;
+import com.jayemceekay.shadowedhearts.registry.util.ModItemComponents;
+import com.jayemceekay.shadowedhearts.registry.util.ModParticleTypes;
 import com.jayemceekay.shadowedhearts.showdown.ShowdownRuntimePatcher;
-import com.jayemceekay.shadowedhearts.snag.SnagEvents;
 import com.jayemceekay.shadowedhearts.util.ShadowedHeartsPlayerData;
-import com.jayemceekay.shadowedhearts.worldgen.ImpactScheduler;
-import com.jayemceekay.shadowedhearts.worldgen.ModStructures;
-import com.jayemceekay.shadowedhearts.worldgen.PlayerActivityHeatmap;
+import com.jayemceekay.shadowedhearts.world.PlayerActivityHeatmap;
+import com.jayemceekay.shadowedhearts.world.gen.ImpactScheduler;
+import com.jayemceekay.shadowedhearts.world.gen.ModStructures;
+import com.jayemceekay.shadowedhearts.world.handler.ShadowMeteoroidProximityHandler;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.registry.ReloadListenerRegistry;
 import kotlin.Unit;
@@ -48,6 +60,8 @@ public final class Shadowedhearts {
     public static final String MOD_ID = "shadowedhearts";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(Shadowedhearts.class);
+
+    public static ElementalType SH_SHADOW_TYPE;
 
     public interface FeatureAdder {
         void add(ResourceKey<PlacedFeature> feature, GenerationStep.Decoration step, TagKey<Biome> validTag);
@@ -105,13 +119,11 @@ public final class Shadowedhearts {
 
         RULE_SHADOW_STARTERS = GameRules.register("doShadowStarters", GameRules.Category.MISC, GameRules.BooleanValue.create(false));
 
-        ElementalTypes.register(new ElementalType(
+        SH_SHADOW_TYPE = ElementalTypes.register(new ElementalType(
                 "shadow", Component.literal("Shadow"),
                 0x604E82, 19, ResourceLocation.fromNamespaceAndPath(Cobblemon.MODID, "textures/gui/types.png"),
                 "shadow"
         ));
-        
-
 
         ElementalTypes.register(new ElementalType("shadow-locked", Component.literal("Locked"), 0x1F1F1F, 20, ResourceLocation.fromNamespaceAndPath(Cobblemon.MODID, "textures/gui/types.png"), "shadow-locked"));
 

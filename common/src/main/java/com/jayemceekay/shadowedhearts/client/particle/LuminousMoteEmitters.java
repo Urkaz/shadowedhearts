@@ -1,9 +1,9 @@
 package com.jayemceekay.shadowedhearts.client.particle;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import com.jayemceekay.shadowedhearts.ShadowAspectUtil;
-import com.jayemceekay.shadowedhearts.core.ModParticleTypes;
-import com.jayemceekay.shadowedhearts.network.LuminousMotePacket;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.network.aura.LuminousMotePacket;
+import com.jayemceekay.shadowedhearts.registry.util.ModParticleTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;

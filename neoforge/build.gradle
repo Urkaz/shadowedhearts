@@ -148,6 +148,9 @@ dependencies {
 
     //simpleTMs
     modCompileOnly("maven.modrinth:yFqR0DNc:uaKfPMYS")
+
+    //lost lore
+    modCompileOnly("maven.modrinth:49cNEVjn:pmWV3g7p")
 }
 
 processResources {

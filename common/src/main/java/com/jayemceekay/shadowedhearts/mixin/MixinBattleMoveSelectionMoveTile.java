@@ -1,16 +1,15 @@
 package com.jayemceekay.shadowedhearts.mixin;
 
 import com.cobblemon.mod.common.api.types.ElementalType;
-import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.battles.InBattleMove;
 import com.cobblemon.mod.common.client.gui.TypeIcon;
 import com.cobblemon.mod.common.client.gui.battle.subscreen.BattleMoveSelection;
-import com.jayemceekay.shadowedhearts.ShadowGate;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
+import com.jayemceekay.shadowedhearts.util.ShadowMaskingUtil;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,8 +27,7 @@ public abstract class MixinBattleMoveSelectionMoveTile {
         boolean forcedPlaceholder = (m.getPp() == 100 && m.getMaxpp() == 100); // Thrash/forced turn UI
         return m.getDisabled()
                 && !forcedPlaceholder
-                && ShadowGate.isShadowLockedClient(pokemon)
-                && !ShadowGate.isShadowMoveId(m.getId());
+                && ShadowAspectUtil.shouldMaskMove(pokemon, m.getId());
     }
 
     // Replace the move name text when masked
@@ -46,13 +44,8 @@ public abstract class MixinBattleMoveSelectionMoveTile {
     )
     private MutableComponent shadowedhearts$maskName(MutableComponent par3) {
         BattleMoveSelection.MoveTile self = (BattleMoveSelection.MoveTile) (Object) this;
-        InBattleMove m = self.getMove();
-        var pokemon = self.getPokemon();
-        boolean forcedPlaceholder = (m.getPp() == 100 && m.getMaxpp() == 100);
-        if (m.getDisabled() && !forcedPlaceholder && pokemon != null
-                && ShadowGate.isShadowLockedClient(pokemon)
-                && !ShadowGate.isShadowMoveId(m.getId())) {
-            return Component.literal("????").copy().withStyle(s -> s.withBold(true));
+        if (shadowedhearts$shouldMask(self)) {
+            return ShadowMaskingUtil.MASKED_NAME;
         }
         return par3;
     }
@@ -69,11 +62,8 @@ public abstract class MixinBattleMoveSelectionMoveTile {
     )
     private MutableComponent shadowedhearts$maskPP(MutableComponent original) {
         BattleMoveSelection.MoveTile self = (BattleMoveSelection.MoveTile) (Object) this;
-        InBattleMove m = self.getMove();
-        var pokemon = self.getPokemon();
-        if (m.getDisabled() || ShadowGate.isShadowMoveId(m.getId()) && pokemon != null
-                && ShadowGate.isShadowLockedClient(pokemon)) {
-            return Component.literal("??/??").copy().withStyle(s -> s.withBold(true));
+        if (shadowedhearts$shouldMask(self)) {
+            return ShadowMaskingUtil.MASKED_PP;
         }
         return original;
     }
@@ -107,8 +97,10 @@ public abstract class MixinBattleMoveSelectionMoveTile {
         BattleMoveSelection.MoveTile self = (BattleMoveSelection.MoveTile) (Object) this;
         if (shadowedhearts$shouldMask(self)) {
             // Neutral gray/black; pick one. Example: dark gray with lower alpha.
-            red = 0.12f; green = 0.12f; blue = 0.12f; // ~#1F1F1F
-            alpha = 1F;
+            red = ShadowMaskingUtil.NEUTRAL_TINT[0]; 
+            green = ShadowMaskingUtil.NEUTRAL_TINT[1]; 
+            blue = ShadowMaskingUtil.NEUTRAL_TINT[2]; 
+            alpha = ShadowMaskingUtil.NEUTRAL_TINT[3];
         }
         original.call(poseStack, resourceLocation, x, y, height, width, uOffset, vOffset, textureWidth, textureHeight, blitOffset, red, green, blue, alpha, b, v, i, o);
     }
@@ -141,6 +133,6 @@ public abstract class MixinBattleMoveSelectionMoveTile {
     )
     private ElementalType shadowedhearts$swapTypeIconWhenLocked(ElementalType original) {
         BattleMoveSelection.MoveTile self = (BattleMoveSelection.MoveTile) (Object) this;
-        return shadowedhearts$shouldMask(self) ? ElementalTypes.INSTANCE.get("shadow-locked") : original;
+        return shadowedhearts$shouldMask(self) ? ShadowMaskingUtil.getLockedType() : original;
     }
 }
