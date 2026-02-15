@@ -4,7 +4,9 @@ import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.net.ServerNetworkPacketHandler
 import com.cobblemon.mod.common.api.storage.pc.PCPosition
 import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil
+import com.jayemceekay.shadowedhearts.network.ShadowedHeartsNetwork
 import com.jayemceekay.shadowedhearts.network.purification.MovePCToPurificationPacket
+import com.jayemceekay.shadowedhearts.network.purification.client.PurificationChamberSyncPacket
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberPosition
 import com.jayemceekay.shadowedhearts.storage.purification.PurificationChamberStore
 import net.minecraft.server.MinecraftServer
@@ -64,5 +66,17 @@ object MovePCToPurificationHandler : ServerNetworkPacketHandler<MovePCToPurifica
         purification[target] = pokemon
 
         // Optionally we could send a client sync for Purification; for MVP we rely on UI optimistic update.
+        // after purification[target] = pokemon
+
+        val entries = mutableListOf<PurificationChamberSyncPacket.Entry>()
+        for (setIdx in 0 until 9) { // or store.totalSets
+            for (slotIdx in 0..4) {
+                val pos = PurificationChamberPosition(setIdx, if (slotIdx == 0) 0 else slotIdx - 1, slotIdx == 0)
+                val mon = purification[pos] ?: continue
+                val nbt = mon.saveToNBT(server.registryAccess())
+                entries += PurificationChamberSyncPacket.Entry(setIdx, slotIdx, nbt)
+            }
+        }
+        ShadowedHeartsNetwork.sendToPlayer(player, PurificationChamberSyncPacket(purification.uuid, entries))
     }
 }

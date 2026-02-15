@@ -168,13 +168,6 @@ class PurificationChamberGUI(
      * 0 = center; 1..4 = outer positions (clockwise), see ClientPurificationStorage.PurificationPosition
      */
     fun setPokemonAt(index: Int, pokemon: Pokemon?) {
-        // Ensure Shadow aspects exist before storing/using in UI
-        if (pokemon != null) {
-            try {
-                ShadowAspectUtil.ensureRequiredShadowAspects(pokemon)
-            } catch (_: Exception) {
-            }
-        }
         purificationStorage.set(
             ClientPurificationStorage.PurificationPosition(
                 index
@@ -198,14 +191,6 @@ class PurificationChamberGUI(
     override fun init() {
         val x = (width - BASE_WIDTH) / 2
         val y = (height - BASE_HEIGHT) / 2
-        // Validate any existing Pokémon in the current set upon opening the chamber UI
-        try {
-            for (i in 0..4) {
-                val p = getPokemonAt(i)
-                if (p != null) ShadowAspectUtil.ensureRequiredShadowAspects(p)
-            }
-        } catch (_: Exception) {
-        }
         this.storageWidget = PurificationStorageWidget(
             pX = x + 85,
             pY = y + 27,
