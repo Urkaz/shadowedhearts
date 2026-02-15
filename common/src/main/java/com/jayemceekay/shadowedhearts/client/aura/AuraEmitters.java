@@ -647,8 +647,6 @@ public final class AuraEmitters {
         var activeShader = useXd ? ModShaders.SHADOW_AURA_XD_CYLINDER : ModShaders.SHADOW_AURA_FOG_CYLINDER;
         var activeUniforms = useXd ? ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS : ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS;
 
-        // Keep depth available for the aura shader's soft intersection
-
         // Cache per-frame matrices and projection parameters
         Matrix4f view = RenderSystem.getModelViewMatrix();
         Matrix4f proj = RenderSystem.getProjectionMatrix();
