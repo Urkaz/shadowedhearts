@@ -1,0 +1,30 @@
+package com.jayemceekay.shadowedhearts.network.purification
+
+import com.cobblemon.mod.common.api.net.NetworkPacket
+import com.jayemceekay.shadowedhearts.Shadowedhearts
+import net.minecraft.core.BlockPos
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.resources.ResourceLocation
+
+data class RelicStoneMotePacket @JvmOverloads constructor(
+    val pos: BlockPos,
+    val shouldStop: Boolean = false
+) : NetworkPacket<RelicStoneMotePacket> {
+    override val id: ResourceLocation = ID
+
+    override fun encode(buf: RegistryFriendlyByteBuf) {
+        buf.writeBlockPos(pos)
+        buf.writeBoolean(shouldStop)
+    }
+
+    companion object {
+        val ID = ResourceLocation.fromNamespaceAndPath(Shadowedhearts.MOD_ID, "relic_stone_mote")
+
+        fun decode(buf: RegistryFriendlyByteBuf): RelicStoneMotePacket {
+            return RelicStoneMotePacket(
+                buf.readBlockPos(),
+                buf.readBoolean()
+            )
+        }
+    }
+}

@@ -1,0 +1,43 @@
+package com.jayemceekay.shadowedhearts.content.blocks.entity;
+ 
+import com.jayemceekay.shadowedhearts.content.blocks.RelicStoneBlock;
+import com.jayemceekay.shadowedhearts.network.purification.RelicStoneMotePacket;
+import com.jayemceekay.shadowedhearts.registry.ModBlockEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+
+public class RelicStoneBlockEntity extends BlockEntity {
+
+    public RelicStoneBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.RELIC_STONE_BE.get(), pos, state);
+    }
+
+    public static void tick(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            RelicStoneBlockEntity blockEntity
+    ) {
+        if (!state.getValue(RelicStoneBlock.HAS_BE)) {
+            return;
+        }
+
+        if (!level.isClientSide && level.getGameTime() % 2 == 0) {
+            Player closestPlayer = level.getNearestPlayer(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 16.0, false);
+            if (closestPlayer != null) {
+                // Send packet to nearby players to spawn particles and play sound
+                RelicStoneMotePacket packet = new RelicStoneMotePacket(pos, false);
+                ((ServerLevel) level).players().forEach(player -> {
+                    if (player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 32 * 32) {
+                        packet.sendToPlayer(player);
+                    }
+                });
+            }
+        }
+    }
+}
+
