@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.jayemceekay.shadowedhearts.client.ModKeybinds;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
 import com.jayemceekay.shadowedhearts.common.aura.AuraReaderCharge;
+import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.jayemceekay.shadowedhearts.common.shadow.ShadowPokemonData;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
 import com.jayemceekay.shadowedhearts.content.items.AuraReaderItem;
@@ -32,7 +33,7 @@ public class AuraScannerHUD {
     private static final ResourceLocation SCAN_RING_OUTER = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/scan_ring_outer.png");
     private static final ResourceLocation SCAN_RING_MIDDLE = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/scan_ring_middle.png");
     private static final ResourceLocation SCANLINES = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/overlay_scanlines.png");
-    private static final ResourceLocation POINTER = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/pointer.png");
+    private static final ResourceLocation POINTER = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/battle/arrow_pointer_up.png");
     private static final ResourceLocation SELECT_ARROW = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/select_arrow.png");
     private static final ResourceLocation INFO_FRAME = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/scan_info_frame.png");
     private static final ResourceLocation SCAN_OVERLAY_CORNERS = ResourceLocation.fromNamespaceAndPath("cobblemon", "textures/gui/pokedex/scan/overlay_corners.png");
@@ -512,9 +513,8 @@ public class AuraScannerHUD {
         guiGraphics.pose().popPose();
 
         int shadowRange = ShadowedHeartsConfigs.getInstance().getShadowConfig().auraScannerShadowRange();
-        List<Entity> nearbyEntities = mc.level.getEntities(null, player.getBoundingBox().inflate(shadowRange));
+        List<Entity> nearbyEntities = mc.level.getEntities(player, player.getBoundingBox().inflate(shadowRange)).stream().filter(e -> e instanceof PokemonEntity pe && ShadowAspectUtil.hasShadowAspect(pe.getPokemon()) && DETECTED_SHADOWS.containsKey(pe.getUUID())).toList();
         for (Entity entity : nearbyEntities) {
-            if (entity instanceof PokemonEntity pe && ShadowPokemonData.isShadow(pe) && DETECTED_SHADOWS.containsKey(pe.getUUID())) {
                 double dx = entity.getX() - player.getX();
                 double dz = entity.getZ() - player.getZ();
                 double angle = Math.atan2(dz, dx) - Math.toRadians(player.getYRot()) - Math.PI / 2;
@@ -537,12 +537,12 @@ public class AuraScannerHUD {
                 float segmentAlpha = alpha * intensity * (0.3f + 0.7f * spike);
                 // Purple for shadow energy
                 RenderSystem.setShaderColor(0.6f, 0.3f, 1.0f, segmentAlpha);
-                // SELECT_ARROW is pointing down by default, we flip it vertically so it points UP
-                // (away from the center) as requested by using an "upside down" version.
-                guiGraphics.blit(SELECT_ARROW, -8, -80, 0, 16, 16, -16, 16, 16);
+                // POINTER texture already points upward. No vertical flip needed.
+                // Draw it away from the center so it indicates direction correctly.
+                // Render at half size (8x6) and adjust X to keep it centered.
+                guiGraphics.blit(POINTER, -8, -70, 0, 0, 16, 6, 16, 16);
 
                 guiGraphics.pose().popPose();
-            }
         }
 
         // Render Meteoroid Indicators
@@ -571,7 +571,7 @@ public class AuraScannerHUD {
             // Slightly different purple/pink for meteoroids?
             // Or just the same to indicate "Shadow Source"
             RenderSystem.setShaderColor(0.8f, 0.2f, 0.9f, segmentAlpha);
-            guiGraphics.blit(SELECT_ARROW, -8, -80, 0, 16, 16, -16, 16, 16);
+            guiGraphics.blit(POINTER, -8, -70, 0, 0, 16, 6, 16, 16);
 
             guiGraphics.pose().popPose();
         }
