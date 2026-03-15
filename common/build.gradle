@@ -7,6 +7,7 @@ architectury {
 }
 
 repositories {
+    mavenLocal()
     maven {
         name = 'Modrinth'
         url = 'https://api.modrinth.com/maven'
@@ -50,6 +51,7 @@ dependencies {
     modCompileOnly( "com.cobblemon:fabric:${cobblemon_version}")
 
     //implementation("org.graalvm.sdk:graal-sdk:22.3.0")
+    modImplementation("com.jayemceekay:fluxui-common:1.0-SNAPSHOT")
 
     // Test framework for common module
     testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"

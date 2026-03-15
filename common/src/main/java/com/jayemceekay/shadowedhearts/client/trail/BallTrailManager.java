@@ -1,6 +1,6 @@
 package com.jayemceekay.shadowedhearts.client.trail;
 
-import com.jayemceekay.shadowedhearts.client.render.BallRenderTypes;
+import com.jayemceekay.shadowedhearts.client.render.rendertypes.BallRenderTypes;
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

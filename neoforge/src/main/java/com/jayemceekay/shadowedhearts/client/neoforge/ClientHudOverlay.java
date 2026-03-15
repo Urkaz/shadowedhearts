@@ -2,7 +2,7 @@ package com.jayemceekay.shadowedhearts.client.neoforge;
 
 import com.jayemceekay.shadowedhearts.Shadowedhearts;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
-import com.jayemceekay.shadowedhearts.client.gui.AuraScannerHUD;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.client.sound.RelicStoneSoundManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,15 +19,12 @@ public final class ClientHudOverlay {
 
     @SubscribeEvent
     public static void onHudRender(RenderGuiEvent.Post event) {
-        // Use NeoForge's GUI render event to draw our debug preview on the HUD.
-        //BallTrailHudDebug.render(event.getGuiGraphics(), event.getPartialTick());
-        //BallGlowHudDebug.render(event.getGuiGraphics(), event.getPartialTick());
-        AuraScannerHUD.render(event.getGuiGraphics(), event.getPartialTick().getGameTimeDeltaPartialTick(true));
+        AuraReaderManager.render(event.getGuiGraphics(), event.getPartialTick());
     }
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
-        AuraScannerHUD.tick();
+        AuraReaderManager.tick();
         AuraPulseRenderer.tick();
         RelicStoneSoundManager.tick();
     }

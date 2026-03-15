@@ -69,6 +69,14 @@ public final class ModItemComponents {
                     .build()
     );
 
+    public static final RegistrySupplier<DataComponentType<Boolean>> AURA_SCANNER_TRACKING = COMPONENT_TYPES.register(
+            "aura_scanner_tracking",
+            () -> DataComponentType.<Boolean>builder()
+                    .persistent(Codec.BOOL)
+                    .networkSynchronized(ByteBufCodecs.BOOL)
+                    .build()
+    );
+
     public static final RegistrySupplier<DataComponentType<Integer>> AURA_READER_CHARGE = COMPONENT_TYPES.register(
             "aura_reader_charge",
             () -> DataComponentType.<Integer>builder()

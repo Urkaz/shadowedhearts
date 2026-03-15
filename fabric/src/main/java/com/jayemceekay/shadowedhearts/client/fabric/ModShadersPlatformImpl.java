@@ -16,59 +16,65 @@ public final class ModShadersPlatformImpl {
                         DefaultVertexFormat.NEW_ENTITY,
                         program -> { ModShaders.SHADOW_AURA_FOG = program; ModShaders.SHADOW_AURA_FOG_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(program); }
                 );*/
-                // Cylinder variant for pillar-style aura bounds
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:shadow_aura_fog_cylinder"),
+                        ResourceLocation.parse("shadowedhearts:aura/shadow_aura_fog_cylinder"),
                         DefaultVertexFormat.NEW_ENTITY,
                         program -> { ModShaders.SHADOW_AURA_FOG_CYLINDER = program; ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(program); }
                 );
 
                 // XD variant (filament-style)
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:shadow_aura_xd_cylinder"),
+                        ResourceLocation.parse("shadowedhearts:aura/shadow_aura_xd_cylinder"),
                         DefaultVertexFormat.NEW_ENTITY,
                         program -> { ModShaders.SHADOW_AURA_XD_CYLINDER = program; ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(program); }
                 );
 
-                // Other shaders
-                registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:shadow_pool"),
-                        DefaultVertexFormat.PARTICLE,
-                        program -> ModShaders.SHADOW_POOL = program
-                );
-
                 // Purification Chamber background (screen-space quad)
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:purification_chamber_background"),
+                        ResourceLocation.parse("shadowedhearts:purification/purification_chamber_background"),
                         DefaultVertexFormat.POSITION_TEX,
                         program -> ModShaders.PURIFICATION_CHAMBER_BACKGROUND = program
                 );
 
                 // Poké Ball glow overlay (additive + fullbright)
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:ball_glow"),
+                        ResourceLocation.parse("shadowedhearts:snag/ball_glow"),
                         DefaultVertexFormat.NEW_ENTITY,
                         program -> ModShaders.BALL_GLOW = program
                 );
 
                 // Ball trail ribbon
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:ball_trail"),
+                        ResourceLocation.parse("shadowedhearts:snag/ball_trail"),
                         DefaultVertexFormat.NEW_ENTITY,
                         program -> ModShaders.BALL_TRAIL = program
                 );
 
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:aura_pulse"),
+                        ResourceLocation.parse("shadowedhearts:aura/aura_pulse"),
                         DefaultVertexFormat.POSITION_TEX,
                         program -> ModShaders.AURA_PULSE = program
                 );
 
                 registrationContext.register(
-                        ResourceLocation.parse("shadowedhearts:luminous_mote"),
+                        ResourceLocation.parse("shadowedhearts:aura/luminous_mote"),
                         DefaultVertexFormat.PARTICLE,
                         program -> ModShaders.LUMINOUS_MOTE = program
                 );
+
+                // Screen-space electromagnetic static overlay
+                registrationContext.register(
+                        ResourceLocation.parse("shadowedhearts:interference/aura_static_interference"),
+                        DefaultVertexFormat.POSITION_TEX,
+                        program -> ModShaders.AURA_STATIC_INTERFERENCE = program
+                );
+
+                registrationContext.register(
+                        ResourceLocation.parse("shadowedhearts:hud/barrel_distortion"),
+                        DefaultVertexFormat.POSITION_COLOR,
+                        program -> ModShaders.HUD_BARREL_DISTORTION = program
+                );
+
             } catch (Exception e) {
                 throw new RuntimeException("Failed to load shaders (Fabric)", e);
             }

@@ -23,6 +23,15 @@ object AuraPulseHandler : ServerNetworkPacketHandler<AuraPulsePacket> {
                 // Pulse costs some charge, say 200 ticks worth (10 seconds)
                 AuraReaderCharge.consume(auraReader, 200, AuraReaderItem.MAX_CHARGE)
 
+                // Instant thermal load bump: +6°C immediately on pulse
+                try {
+                    val current = AuraReaderItem.getOperationalTempC(auraReader)
+                    val minC = AuraReaderItem.getMinOperatingTempC(auraReader)
+                    val maxC = AuraReaderItem.getMaxOperatingTempC(auraReader)
+                    val bumped = (current + 6.0f).coerceIn(minC, maxC)
+                    AuraReaderItem.setOperationalTempC(auraReader, bumped)
+                } catch (_: Throwable) { }
+
                 val shadowRange = ShadowedHeartsConfigs.getInstance().shadowConfig.auraScannerShadowRange()
                 val entities: List<Entity> = player.level().getEntities(null, player.boundingBox.inflate(shadowRange.toDouble()))
                 for (entity in entities) {

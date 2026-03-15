@@ -148,6 +148,21 @@ public final class ModConfig implements IShadowConfig {
     }
 
     @Override
+    public int auraLockMaxSeconds() {
+        return DATA.auraScanner.auraLockMaxSeconds.get();
+    }
+
+    @Override
+    public int auraLockRange() {
+        return DATA.auraScanner.auraLockRange.get();
+    }
+
+    @Override
+    public boolean auraLockPersistsWhenAFK() {
+        return DATA.auraScanner.auraLockPersistsWhenAFK.get();
+    }
+
+    @Override
     public List<? extends String> heartGaugeMaxOverrides() {
         return DATA.heartGauge.maxOverrides.get();
     }
@@ -652,6 +667,9 @@ public final class ModConfig implements IShadowConfig {
         public ModConfigSpec.IntValue auraScannerShadowRange;
         public ModConfigSpec.IntValue auraScannerMeteoroidRange;
         public ModConfigSpec.BooleanValue auraReaderRequiredForAura;
+        public ModConfigSpec.IntValue auraLockMaxSeconds;
+        public ModConfigSpec.IntValue auraLockRange;
+        public ModConfigSpec.BooleanValue auraLockPersistsWhenAFK;
 
         private void build(ModConfigSpec.Builder builder) {
             auraScannerShadowRange = builder
@@ -665,6 +683,20 @@ public final class ModConfig implements IShadowConfig {
             auraReaderRequiredForAura = builder
                     .comment("Whether the Aura Reader is required to see Shadow Auras in the overworld.")
                     .define("auraReaderRequiredForAura", false);
+
+            builder.push("auraLock");
+            auraLockMaxSeconds = builder
+                    .comment("Maximum seconds a single aura lock request can persist before expiring.")
+                    .defineInRange("maxSeconds", 60, 1, 600);
+
+            auraLockRange = builder
+                    .comment("Maximum distance (blocks) from the player to the target Pokemon to accept a lock request.")
+                    .defineInRange("range", 96, 8, 512);
+
+            auraLockPersistsWhenAFK = builder
+                    .comment("If true, aura locks remain effective even when the locking player is AFK. If false, AFK players may be ignored in future logic.")
+                    .define("persistsWhenAFK", false);
+            builder.pop();
         }
     }
 

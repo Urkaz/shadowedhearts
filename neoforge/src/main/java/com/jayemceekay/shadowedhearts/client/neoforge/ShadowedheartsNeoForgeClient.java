@@ -8,6 +8,7 @@ import com.jayemceekay.shadowedhearts.client.ShadowedHeartsClient;
 import com.jayemceekay.shadowedhearts.client.aura.AuraEmitters;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
 import com.jayemceekay.shadowedhearts.client.ball.BallEmitters;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteEmitters;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteParticle;
 import com.jayemceekay.shadowedhearts.client.particle.RelicStoneMoteParticle;
@@ -53,12 +54,16 @@ public final class ShadowedheartsNeoForgeClient {
         ShadowedHeartsConfigs.getInstance().getClientConfig().load();
         modContainer.registerConfig(ModConfig.Type.CLIENT, ShadowedHeartsConfigs.getInstance().getClientConfig().getSpec(), "shadowedhearts/client.toml");
         ShadowedHeartsClient.init();
+        // Register default aura interference effects (client)
+        com.jayemceekay.shadowedhearts.client.aura.effects.AuraInterferenceRegistry.initDefault();
     }
 
     public static void registerKeybinds(RegisterKeyMappingsEvent event) {
         ModKeybinds.init();
         event.register(ModKeybinds.AURA_SCANNER);
         event.register(ModKeybinds.AURA_PULSE);
+        event.register(ModKeybinds.AURA_NEXT_SIGNAL);
+        event.register(ModKeybinds.AURA_PREV_SIGNAL);
     }
 
     public static void registerParticles(RegisterParticleProvidersEvent evt) {
@@ -69,6 +74,14 @@ public final class ShadowedheartsNeoForgeClient {
         evt.registerSpriteSet(
                 ModParticleTypes.RELIC_STONE_MOTE.get(),
                 RelicStoneMoteParticle.Provider::new
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(
+                com.jayemceekay.shadowedhearts.registry.ModMenuTypes.AURA_READER_UPGRADES.get(),
+                com.jayemceekay.shadowedhearts.client.gui.AuraReaderUpgradeScreen::new
         );
     }
 
@@ -98,6 +111,25 @@ public final class ShadowedheartsNeoForgeClient {
     public static void onConfigReloading(ModConfigEvent.Reloading event) {
         if (event.getConfig().getSpec() == ClientConfig.SPEC) {
             ShadowedHeartsConfigs.getInstance().getClientConfig().load();
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMouseScroll(InputEvent.MouseScrollingEvent event) {
+        // Positive delta usually means scrolling up
+        double delta;
+        try {
+            // NeoForge may expose axis-specific accessor
+            delta = (double) InputEvent.MouseScrollingEvent.class.getMethod("getScrollDeltaY").invoke(event);
+        } catch (Exception reflectFail) {
+            try {
+                delta = (double) InputEvent.MouseScrollingEvent.class.getMethod("getScrollDelta").invoke(event);
+            } catch (Exception ignored) {
+                delta = 0.0;
+            }
+        }
+        if (AuraReaderManager.handleShiftScroll(delta)) {
+            event.setCanceled(true);
         }
     }
 

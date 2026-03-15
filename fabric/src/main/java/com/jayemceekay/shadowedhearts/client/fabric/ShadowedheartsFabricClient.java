@@ -7,7 +7,7 @@ import com.jayemceekay.shadowedhearts.client.ModShaders;
 import com.jayemceekay.shadowedhearts.client.aura.AuraEmitters;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
 import com.jayemceekay.shadowedhearts.client.ball.BallEmitters;
-import com.jayemceekay.shadowedhearts.client.gui.AuraScannerHUD;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteEmitters;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteParticle;
 import com.jayemceekay.shadowedhearts.client.particle.RelicStoneMoteParticle;
@@ -23,6 +23,8 @@ import com.jayemceekay.shadowedhearts.registry.ModItems;
 import com.jayemceekay.shadowedhearts.registry.util.ModParticleTypes;
 import com.jayemceekay.shadowedhearts.util.HeldItemAnchorCache;
 import com.mojang.blaze3d.vertex.PoseStack;
+import dev.architectury.event.EventResult;
+import dev.architectury.event.events.client.ClientRawInputEvent;
 import dev.felnull.specialmodelloader.api.event.SpecialModelLoaderEvents;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeModConfigEvents;
@@ -62,17 +64,28 @@ public final class ShadowedheartsFabricClient implements ClientModInitializer {
         DepthCapture.init();
         ModShaders.initClient();
         ModShadersPlatformImpl.registerShaders();
+        // Register default aura interference effects
+        com.jayemceekay.shadowedhearts.client.aura.effects.AuraInterferenceRegistry.initDefault();
         // Register keybinds
         ModKeybinds.init();
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_SCANNER);
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_PULSE);
+        ModKeybindsPlatformImpl.register(ModKeybinds.AURA_NEXT_SIGNAL);
+        ModKeybindsPlatformImpl.register(ModKeybinds.AURA_PREV_SIGNAL);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            AuraScannerHUD.tick();
+            AuraReaderManager.tick();
             AuraPulseRenderer.tick();
             RelicStoneSoundManager.tick();
         });
-        HudRenderCallback.EVENT.register((guiGraphics, tickCounter) -> AuraScannerHUD.render(guiGraphics, tickCounter.getGameTimeDeltaPartialTick(true)));
+        HudRenderCallback.EVENT.register((guiGraphics, tickCounter) -> AuraReaderManager.render(guiGraphics, tickCounter.getGameTimeDeltaPartialTick(true)));
+        // Screens
+        net.minecraft.client.gui.screens.MenuScreens.register(
+                com.jayemceekay.shadowedhearts.registry.ModMenuTypes.AURA_READER_UPGRADES.get(),
+                com.jayemceekay.shadowedhearts.client.gui.AuraReaderUpgradeScreen::new
+        );
+
+        ClientRawInputEvent.MOUSE_SCROLLED.register((minecraft, v, v1) -> EventResult.interrupt(AuraReaderManager.handleShiftScroll(v1)));
 
         // Special Model Loader registration
         SpecialModelLoaderEvents.LOAD_SCOPE.register(() -> (resourceManager, location) -> Shadowedhearts.MOD_ID.equals(location.getNamespace()));

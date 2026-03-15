@@ -76,6 +76,8 @@ object ShadowedHeartsNetwork {
         add(PacketRegisterInfo(AuraPulsePacket.ID, AuraPulsePacket::decode, AuraPulseHandler))
         add(PacketRegisterInfo(AuraScannerC2SPacket.ID, AuraScannerC2SPacket::decode, AuraScannerHandler))
         add(PacketRegisterInfo(MeteoroidScanRequestPacket.ID, MeteoroidScanRequestPacket::decode, MeteoroidScanRequestHandler))
+        add(PacketRegisterInfo(AuraLockC2SPacket.ID, AuraLockC2SPacket::decode, AuraLockHandler))
+        add(PacketRegisterInfo(AuraTrackingStateC2SPacket.ID, AuraTrackingStateC2SPacket::decode, AuraTrackingStateHandler))
     }
 
     @JvmStatic

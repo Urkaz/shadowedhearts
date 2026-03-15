@@ -102,6 +102,7 @@ public final class AuraReaderEvents {
     private static void tickAuraReader(Player player, ItemStack stack) {
         Boolean active = stack.get(ModItemComponents.AURA_SCANNER_ACTIVE.get());
         if (active != null && active) {
+            if(player.isCreative()) return;
             boolean hasCharge = AuraReaderCharge.consume(stack, 1, AuraReaderItem.MAX_CHARGE);
             if (!hasCharge) {
                 stack.set(ModItemComponents.AURA_SCANNER_ACTIVE.get(), false);

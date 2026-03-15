@@ -1,6 +1,7 @@
 package com.jayemceekay.shadowedhearts.client.particle;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.common.shadow.ShadowAspectUtil;
 import com.jayemceekay.shadowedhearts.network.aura.LuminousMotePacket;
 import com.jayemceekay.shadowedhearts.registry.util.ModParticleTypes;
@@ -77,7 +78,7 @@ public final class LuminousMoteEmitters {
                 continue;
             }
 
-            if (auraReaderRequired && !hasAuraReader && !com.jayemceekay.shadowedhearts.client.gui.AuraScannerHUD.isDetected(group.getEntityUuid())) {
+            if (auraReaderRequired && !hasAuraReader && !AuraReaderManager.isDetected(group.getEntityUuid())) {
                 continue;
             }
 

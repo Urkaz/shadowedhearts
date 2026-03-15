@@ -28,6 +28,14 @@ public final class ModShaders {
     public static ShaderInstance AURA_PULSE;
     public static ShaderInstance LUMINOUS_MOTE;
 
+    // Screen-space electromagnetic static overlay for Aura Scanner
+    public static ShaderInstance AURA_STATIC_INTERFERENCE;
+    public static ShaderInstance HEAT_HAZE_INTERFERENCE;
+
+
+    // Screen-space HUD shaders
+    public static ShaderInstance HUD_BARREL_DISTORTION;
+
     private ModShaders() {}
 
     /** Called from each platform's client init to trigger shader registration. */

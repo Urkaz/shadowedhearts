@@ -49,9 +49,14 @@ public interface IShadowConfig extends IModConfig {
     default int purificationChamberStepRequirement() { return 161; }
 
     // Aura Scanner
-    default int auraScannerShadowRange() { return 64; }
-    default int auraScannerMeteoroidRange() { return 128; }
+    default int auraScannerShadowRange() { return 128; }
+    default int auraScannerMeteoroidRange() { return 256; }
     default boolean auraReaderRequiredForAura() { return true; }
+
+    // Aura Lock (scanner lock to prevent despawn)
+    default int auraLockMaxSeconds() { return 60; }
+    default int auraLockRange() { return 128; }
+    default boolean auraLockPersistsWhenAFK() { return false; }
 
     // Heart Gauge
     default List<? extends String> heartGaugeMaxOverrides() { return List.of(); }

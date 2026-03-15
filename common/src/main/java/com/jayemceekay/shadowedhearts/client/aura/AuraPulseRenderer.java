@@ -222,24 +222,34 @@ public class AuraPulseRenderer {
             RenderSystem.activeTexture(GL13.GL_TEXTURE2);
             RenderSystem.bindTexture(pulseTextureId);
 
-            if (allocatedTextureWidthCapacity != pboCapacityTexels) {
-                GL11.glTexImage2D(
-                        GL11.GL_TEXTURE_2D, 0, INTERNAL_FORMAT, pboCapacityTexels, 1, 0, GL11.GL_RGBA, GL11.GL_FLOAT, 0
-                );
-                allocatedTextureWidthCapacity = pboCapacityTexels;
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
-                GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-            }
+            // Ensure pixel-store state is sane for PBO uploads (avoid inherited bad state from other render paths)
+            GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 4);
+            GL12.glPixelStorei(GL12.GL_UNPACK_ROW_LENGTH, 0);
 
-            // Upload from PBO with offset 0 (driver reads from GL-owned storage). Guard against zero-sized upload.
-            if (width > 0) {
-                GL11.glTexSubImage2D(
-                        GL11.GL_TEXTURE_2D, 0, 0, 0, width, 1, GL11.GL_RGBA, GL11.GL_FLOAT, 0L
-                );
-            }
+            try {
+                if (allocatedTextureWidthCapacity != pboCapacityTexels) {
+                    // Temporarily unbind PBO so this is a pure allocation (avoid INVALID_OPERATION on some drivers)
+                    GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, 0);
+                    GL11.glTexImage2D(
+                            GL11.GL_TEXTURE_2D, 0, INTERNAL_FORMAT, pboCapacityTexels, 1, 0, GL11.GL_RGBA, GL11.GL_FLOAT, 0
+                    );
+                    allocatedTextureWidthCapacity = pboCapacityTexels;
+                    GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+                    GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+                    // Rebind PBO for subsequent subimage upload
+                    GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, pulsePboId);
+                }
 
-            // Restore previous PBO binding
-            GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, prevUnpackPbo);
+                // Upload from PBO with offset 0 (driver reads from GL-owned storage). Guard against zero-sized upload.
+                if (width > 0) {
+                    GL11.glTexSubImage2D(
+                            GL11.GL_TEXTURE_2D, 0, 0, 0, width, 1, GL11.GL_RGBA, GL11.GL_FLOAT, 0L
+                    );
+                }
+            } finally {
+                // Restore previous PBO binding
+                GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, prevUnpackPbo);
+            }
 
             ModShaders.AURA_PULSE.setSampler("uPulseTexture", pulseTextureId);
 

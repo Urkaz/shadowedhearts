@@ -21,49 +21,47 @@ public class ModShadersPlatformImpl {
     @SubscribeEvent
     public static void registerShaders(RegisterShadersEvent evt) {
         try {
-            // Base and variants — register and link to router modes
-            /*evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:shadow_aura_fog", DefaultVertexFormat.NEW_ENTITY),
-                    shader -> {
-                        ModShaders.SHADOW_AURA_FOG = shader;
-                        ModShaders.SHADOW_AURA_FOG_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(shader);
-                    });*/
-
             // Cylinder variant for pillar-style aura bounds
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:shadow_aura_fog_cylinder", DefaultVertexFormat.NEW_ENTITY),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/shadow_aura_fog_cylinder", DefaultVertexFormat.NEW_ENTITY),
                     shader -> {
                         ModShaders.SHADOW_AURA_FOG_CYLINDER = shader;
                         ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(shader);
                     });
 
             // XD variant (filament-style)
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:shadow_aura_xd_cylinder", DefaultVertexFormat.NEW_ENTITY),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/shadow_aura_xd_cylinder", DefaultVertexFormat.NEW_ENTITY),
                     shader -> {
                         ModShaders.SHADOW_AURA_XD_CYLINDER = shader;
                         ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS = com.jayemceekay.shadowedhearts.client.ShadowFogUniforms.from(shader);
                     });
 
-            // Other shaders
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:shadow_pool", DefaultVertexFormat.PARTICLE),
-                    shader -> ModShaders.SHADOW_POOL = shader);
-
             // Purification Chamber background
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:purification_chamber_background", DefaultVertexFormat.POSITION_TEX),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:purification/purification_chamber_background", DefaultVertexFormat.POSITION_TEX),
                     shader -> ModShaders.PURIFICATION_CHAMBER_BACKGROUND = shader);
 
             // Poké Ball glow overlay (additive + fullbright)
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:ball_glow", DefaultVertexFormat.NEW_ENTITY),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:snag/ball_glow", DefaultVertexFormat.NEW_ENTITY),
                     shader -> ModShaders.BALL_GLOW = shader);
 
             // Ball trail ribbon
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:ball_trail", DefaultVertexFormat.NEW_ENTITY),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:snag/ball_trail", DefaultVertexFormat.NEW_ENTITY),
                     shader -> ModShaders.BALL_TRAIL = shader);
 
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura_pulse", DefaultVertexFormat.POSITION_TEX),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/aura_pulse", DefaultVertexFormat.POSITION_TEX),
                     shader -> ModShaders.AURA_PULSE = shader);
 
-            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:luminous_mote", DefaultVertexFormat.PARTICLE),
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/luminous_mote", DefaultVertexFormat.PARTICLE),
                     shader -> ModShaders.LUMINOUS_MOTE = shader);
 
+            // Screen-space electromagnetic static overlay
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:interference/aura_static_interference", DefaultVertexFormat.POSITION_TEX),
+                    shader -> ModShaders.AURA_STATIC_INTERFERENCE = shader);
+
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:interference/heat_haze_interference", DefaultVertexFormat.POSITION_TEX),
+                    shader -> ModShaders.HEAT_HAZE_INTERFERENCE = shader);
+
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:hud/barrel_distortion", DefaultVertexFormat.POSITION_COLOR),
+                    shader -> ModShaders.HUD_BARREL_DISTORTION = shader);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load shaders", e);
         }

@@ -21,6 +21,7 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
         public ModConfigSpec.BooleanValue enableShadowAura;
         public ModConfigSpec.BooleanValue auraScannerEnabled;
         public ModConfigSpec.BooleanValue skipIrisWarning;
+        public ModConfigSpec.BooleanValue useFahrenheitDisplay;
         public ModConfigSpec.DoubleValue auraReaderYOffset;
 
         public ModConfigSpec.DoubleValue shadowAuraInitialBurstVolume;
@@ -43,6 +44,10 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
             skipIrisWarning = builder
                     .comment("Whether to skip the Iris shader warning screen.")
                     .define("skipIrisWarning", false);
+
+            useFahrenheitDisplay = builder
+                    .comment("Display temperatures in Fahrenheit instead of Celsius in the Aura Scanner HUD.")
+                    .define("useFahrenheitDisplay", false);
 
             auraReaderYOffset = builder
                     .comment("The Y offset for the Aura Reader model.")
@@ -95,6 +100,11 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
     @Override
     public float auraReaderYOffset() {
         return DATA.auraReaderYOffset.get().floatValue();
+    }
+
+    @Override
+    public boolean useFahrenheitDisplay() {
+        return DATA.useFahrenheitDisplay.get();
     }
 
     @Override

@@ -10,7 +10,10 @@ public final class ModKeybinds {
     private ModKeybinds() {}
 
     public static KeyMapping AURA_SCANNER;
+    public static KeyMapping AURA_MODE_SELECTOR;
     public static KeyMapping AURA_PULSE;
+    public static KeyMapping AURA_NEXT_SIGNAL;
+    public static KeyMapping AURA_PREV_SIGNAL;
 
     private static final String CAT = "key.categories.shadowedhearts";
     public static void init() {
@@ -22,10 +25,34 @@ public final class ModKeybinds {
             );
         }
 
+        if (AURA_MODE_SELECTOR == null) {
+            AURA_MODE_SELECTOR = new KeyMapping(
+                    "key.shadowedhearts.aura_mode_selector",
+                    GLFW.GLFW_KEY_C,
+                    CAT
+            );
+        }
+
         if (AURA_PULSE == null) {
             AURA_PULSE = new KeyMapping(
                     "key.shadowedhearts.aura_pulse",
                     GLFW.GLFW_KEY_B,
+                    CAT
+            );
+        }
+
+        if (AURA_NEXT_SIGNAL == null) {
+            AURA_NEXT_SIGNAL = new KeyMapping(
+                    "key.shadowedhearts.aura_next_signal",
+                    GLFW.GLFW_KEY_RIGHT_BRACKET,
+                    CAT
+            );
+        }
+
+        if (AURA_PREV_SIGNAL == null) {
+            AURA_PREV_SIGNAL = new KeyMapping(
+                    "key.shadowedhearts.aura_prev_signal",
+                    GLFW.GLFW_KEY_LEFT_BRACKET,
                     CAT
             );
         }
@@ -36,7 +63,19 @@ public final class ModKeybinds {
         return AURA_SCANNER != null && AURA_SCANNER.consumeClick();
     }
 
+    public static boolean consumeAuraModeSelectorPress() {
+        return AURA_MODE_SELECTOR != null && AURA_MODE_SELECTOR.consumeClick();
+    }
+
     public static boolean consumeAuraPulsePress() {
         return AURA_PULSE != null && AURA_PULSE.consumeClick();
+    }
+
+    public static boolean consumeNextSignal() {
+        return AURA_NEXT_SIGNAL != null && AURA_NEXT_SIGNAL.consumeClick();
+    }
+
+    public static boolean consumePrevSignal() {
+        return AURA_PREV_SIGNAL != null && AURA_PREV_SIGNAL.consumeClick();
     }
 }
