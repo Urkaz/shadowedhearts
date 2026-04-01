@@ -14,6 +14,7 @@ public final class ModKeybinds {
     public static KeyMapping AURA_PULSE;
     public static KeyMapping AURA_NEXT_SIGNAL;
     public static KeyMapping AURA_PREV_SIGNAL;
+    public static KeyMapping DEBUG_REINIT_HUD;
 
     private static final String CAT = "key.categories.shadowedhearts";
     public static void init() {
@@ -25,13 +26,13 @@ public final class ModKeybinds {
             );
         }
 
-        if (AURA_MODE_SELECTOR == null) {
+        /*if (AURA_MODE_SELECTOR == null) {
             AURA_MODE_SELECTOR = new KeyMapping(
                     "key.shadowedhearts.aura_mode_selector",
                     GLFW.GLFW_KEY_C,
                     CAT
             );
-        }
+        }*/
 
         if (AURA_PULSE == null) {
             AURA_PULSE = new KeyMapping(
@@ -56,6 +57,14 @@ public final class ModKeybinds {
                     CAT
             );
         }
+
+        if (DEBUG_REINIT_HUD == null) {
+            DEBUG_REINIT_HUD = new KeyMapping(
+                    "key.shadowedhearts.debug_reinit_hud",
+                    GLFW.GLFW_KEY_F8,
+                    CAT
+            );
+        }
     }
 
 
@@ -77,5 +86,9 @@ public final class ModKeybinds {
 
     public static boolean consumePrevSignal() {
         return AURA_PREV_SIGNAL != null && AURA_PREV_SIGNAL.consumeClick();
+    }
+
+    public static boolean consumeDebugReinitHudPress() {
+        return DEBUG_REINIT_HUD != null && DEBUG_REINIT_HUD.consumeClick();
     }
 }

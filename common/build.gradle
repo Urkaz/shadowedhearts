@@ -6,6 +6,12 @@ architectury {
     common rootProject.enabled_platforms.split(',')
 }
 
+configurations {
+    all {
+        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+    }
+}
+
 repositories {
     mavenLocal()
     maven {
@@ -51,7 +57,9 @@ dependencies {
     modCompileOnly( "com.cobblemon:fabric:${cobblemon_version}")
 
     //implementation("org.graalvm.sdk:graal-sdk:22.3.0")
-    modImplementation("com.jayemceekay:fluxui-common:1.0-SNAPSHOT")
+    modImplementation("com.jayemceekay:fluxui-common:1.0-SNAPSHOT") {
+        changing = true
+    }
 
     // Test framework for common module
     testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"

@@ -172,15 +172,13 @@ public final class DepthCapture {
             try {
                 if (scissorEnabledFB) GL11.glDisable(GL11.GL_SCISSOR_TEST);
                 GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, srcFbo);
+                // Ensure the texture storage exists at the correct size
+                if (mw != w || mh != h || depthTex == 0) {
+                    onResize(mw, mh);
+                }
                 // Bind our destination depth texture and copy from the current read framebuffer's depth buffer
                 GL13.glActiveTexture(GL13.GL_TEXTURE0);
                 GL11.glBindTexture(GL11.GL_TEXTURE_2D, depthTex);
-                // Ensure the texture storage exists at the correct size
-                if (mw != w || mh != h) {
-                    // reallocate to match source if something changed unexpectedly
-                    onResize(mw, mh);
-                    GL11.glBindTexture(GL11.GL_TEXTURE_2D, depthTex);
-                }
                 GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, w, h);
             } finally {
                 if (scissorEnabledFB) GL11.glEnable(GL11.GL_SCISSOR_TEST);

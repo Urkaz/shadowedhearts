@@ -47,6 +47,10 @@ public class ModShadersPlatformImpl {
             evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:snag/ball_trail", DefaultVertexFormat.NEW_ENTITY),
                     shader -> ModShaders.BALL_TRAIL = shader);
 
+            // Shadow aura trail (fullscreen quad, sphere-traced SDF raymarching)
+            evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/shadow_aura_trail", DefaultVertexFormat.POSITION),
+                    shader -> ModShaders.SHADOW_AURA_TRAIL = shader);
+
             evt.registerShader(new ShaderInstance(evt.getResourceProvider(), "shadowedhearts:aura/aura_pulse", DefaultVertexFormat.POSITION_TEX),
                     shader -> ModShaders.AURA_PULSE = shader);
 

@@ -203,11 +203,7 @@ public final class AuraEmitters {
         Matrix4f invModel = new Matrix4f(model).invert();
         Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
 
-        float timeVal = (Minecraft.getInstance() != null)
-                ? (((Minecraft.getInstance().level != null)
-                ? (Minecraft.getInstance().level.getGameTime() + partialTicks)
-                : (Minecraft.getInstance().gui.getGuiTicks() + partialTicks)) * 0.05f)
-                : 0f;
+        float timeVal = (System.currentTimeMillis() % 100000) / 1000.0f * 2.0f;
 
         var uu = useXd ? ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS : ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS;
         if (uu != null) {
@@ -358,11 +354,7 @@ public final class AuraEmitters {
         Matrix4f invModel = new Matrix4f(model).invert();
         Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
 
-        float timeVal = (Minecraft.getInstance() != null)
-                ? (((Minecraft.getInstance().level != null)
-                ? (Minecraft.getInstance().level.getGameTime() + partialTicks)
-                : (Minecraft.getInstance().gui.getGuiTicks() + partialTicks)) * 0.05f)
-                : 0f;
+        float timeVal = (System.currentTimeMillis() % 100000) / 1000.0f * 2.0f;
 
         var uu = useXd ? ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS : ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS;
         if (uu != null) {
@@ -517,11 +509,7 @@ public final class AuraEmitters {
         Matrix4f invModel = new Matrix4f(model).invert();
         Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
 
-        float timeVal = (Minecraft.getInstance() != null)
-                ? (((Minecraft.getInstance().level != null)
-                ? (Minecraft.getInstance().level.getGameTime() + partialTicks)
-                : (Minecraft.getInstance().gui.getGuiTicks() + partialTicks)) * 0.05f)
-                : 0f;
+        float timeVal = (System.currentTimeMillis() % 100000) / 1000.0f * 2.0f;
 
         var uu = useXd ? ModShaders.SHADOW_AURA_XD_CYLINDER_UNIFORMS : ModShaders.SHADOW_AURA_FOG_CYLINDER_UNIFORMS;
         if (uu != null) {
@@ -665,8 +653,9 @@ public final class AuraEmitters {
         // Hoist per-frame uniforms (view/proj/inverses, time) out of the per-instance loop
         var shFrame = activeShader;
         var uuFrame = activeUniforms;
-        float timeValFrame = (Minecraft.getInstance().level.getGameTime() + partialTicks) * 0.05f;
+        float timeValFrame = (System.currentTimeMillis() % 100000) / 1000.0f * 2.0f;
         if (shFrame != null) {
+            RenderSystem.setShader(() -> shFrame);
             if (uuFrame != null) {
                 if (uuFrame.uView() != null) uuFrame.uView().set(view);
                 if (uuFrame.uProj() != null) uuFrame.uProj().set(proj);
@@ -744,7 +733,7 @@ public final class AuraEmitters {
             double z = iz - camPos.z;
 
             if (ent instanceof PokemonEntity pokemonEntity) {
-                float entityHeight = Mth.lerp(partialTicks, inst.prevBbH, inst.lastBbH);
+                float entityHeight = Math.max(0.1f, Mth.lerp(partialTicks, inst.prevBbH, inst.lastBbH));
                 float radius = Math.max(0.25f, Mth.lerp(partialTicks, (float) inst.prevBbSize, (float) inst.lastBbSize));
                 // Screen-space radius for LOD selection
                 double cy = y;
@@ -752,7 +741,11 @@ public final class AuraEmitters {
                 float pxRadiusShell = distCenter > 0.0001 ? (radius * screenHeightPx) / (2f * (float) distCenter * tanHalfFovY) : 9999f;
                 int lodShell = (pxRadiusShell > 150f) ? 3 : (pxRadiusShell > 60f) ? 2 : (pxRadiusShell > 20f) ? 1 : 0;
 
-                Matrix4f model = new Matrix4f().translate((float) (x), (float) ((y + radius / 2f)), (float) (z));
+                PoseStack poseStack = new PoseStack();
+                poseStack.pushPose();
+                poseStack.translate((float) (x), (float) ((y + radius / 2f)), (float) (z));
+
+                Matrix4f model = new Matrix4f(poseStack.last().pose());
                 Matrix4f invModel = new Matrix4f(model).invert();
                 Matrix4f mvp = new Matrix4f(proj).mul(view).mul(model);
                 var sh = activeShader;
@@ -822,6 +815,7 @@ public final class AuraEmitters {
                 /*com.jayemceekay.shadowedhearts.client.render.geom.SphereBuffers.drawUnitSphereLod(vcShell, mat, 0, 0, 0, 0, lodShell);*/
                 // Flush the buffer for this render type to ensure per-instance uniforms apply to this aura only
                 buffersOverworld.endLastBatch();
+                poseStack.popPose();
             }
         }
     }

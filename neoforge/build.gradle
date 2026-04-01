@@ -82,6 +82,7 @@ repositories {
         name = "AzureDoom Mods"
         url = "https://maven.azuredoom.com/mods"
     }
+    mavenLocal()
 }
 
 dependencies {
@@ -98,6 +99,9 @@ dependencies {
     //kotlin for forge
     modCompileOnly("maven.modrinth:ordsPcFz:4qCjWixP")
     runtimeOnly("maven.modrinth:ordsPcFz:4qCjWixP")
+
+    //FluxUI
+    modImplementation("com.jayemceekay:fluxui-neoforge:1.0-SNAPSHOT")
 
     //iris shaders
     modCompileOnly("maven.modrinth:YL57xq9U:t3ruzodq")

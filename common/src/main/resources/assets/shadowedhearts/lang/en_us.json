@@ -39,6 +39,7 @@
   "key.shadowedhearts.aura_scanner": "Toggle Aura Scanner",
   "key.shadowedhearts.aura_mode_selector": "Aura Scanner Mode Selection",
   "key.shadowedhearts.aura_pulse": "Aura Pulse",
+  "key.shadowedhearts.debug_reinit_hud": "Debug: Re-init Aura Reader HUD",
   "key.categories.shadowedhearts": "Shadowed Hearts",
 
   "command.shadowedhearts.shadow.description": "Shadow Pokémon admin commands.",

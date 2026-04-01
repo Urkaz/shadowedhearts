@@ -25,6 +25,9 @@ public final class ModShaders {
     // Trail ribbon shader (uses UV scrolling texture)
     public static ShaderInstance BALL_TRAIL;
 
+    // Shadow aura trail tube shader (lightweight 2-octave noise on 6-sided tube)
+    public static ShaderInstance SHADOW_AURA_TRAIL;
+
     public static ShaderInstance AURA_PULSE;
     public static ShaderInstance LUMINOUS_MOTE;
 

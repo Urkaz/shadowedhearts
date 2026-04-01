@@ -98,6 +98,22 @@ public final class AuraRenderTypes {
         return RenderType.create("shadowedhearts:whistle_ground_overlay", DefaultVertexFormat.PARTICLE, VertexFormat.Mode.TRIANGLES, 256, false, true, state);
     }
 
+    public static RenderType shadow_trail() {
+        RenderType.CompositeState state = RenderType.CompositeState.builder()
+                .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.SHADOW_AURA_TRAIL != null
+                        ? ModShaders.SHADOW_AURA_TRAIL
+                        : GameRenderer.getParticleShader()))
+                .setTextureState(RenderStateShard.NO_TEXTURE)
+                .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                .setCullState(RenderStateShard.NO_CULL)
+                .setLightmapState(RenderStateShard.LIGHTMAP)
+                .setLayeringState(RenderStateShard.VIEW_OFFSET_Z_LAYERING)
+                .createCompositeState(true);
+        return RenderType.create("shadowedhearts:shadow_trail", DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS, 256, false, true, state);
+    }
+
     public static RenderType screen_decal() {
         RenderType.CompositeState state = RenderType.CompositeState.builder()
                 .setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getPositionColorShader))

@@ -4,6 +4,7 @@ import com.jayemceekay.shadowedhearts.Shadowedhearts;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
 import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.client.sound.RelicStoneSoundManager;
+import com.jayemceekay.shadowedhearts.client.trail.TrailClientState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -19,13 +20,16 @@ public final class ClientHudOverlay {
 
     @SubscribeEvent
     public static void onHudRender(RenderGuiEvent.Post event) {
-        AuraReaderManager.render(event.getGuiGraphics(), event.getPartialTick());
+        AuraReaderManager.render(event.getGuiGraphics(), event.getPartialTick().getRealtimeDeltaTicks());
     }
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         AuraReaderManager.tick();
         AuraPulseRenderer.tick();
+        if (AuraReaderManager.isActive()) {
+            TrailClientState.INSTANCE.tick();
+        }
         RelicStoneSoundManager.tick();
     }
 }

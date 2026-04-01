@@ -12,8 +12,8 @@ import com.cobblemon.mod.common.net.messages.server.pokedex.scanner.FinishScanni
 import com.cobblemon.mod.common.net.messages.server.pokedex.scanner.StartScanningPacket;
 import com.cobblemon.mod.common.pokedex.scanner.PokemonScanner;
 import com.cobblemon.mod.common.pokedex.scanner.ScannableEntity;
-import com.jayemceekay.shadowedhearts.client.gui.modes.AbstractModeLogic;
-import com.jayemceekay.shadowedhearts.client.gui.modes.PokedexScannerRendererImpl;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
+import com.jayemceekay.shadowedhearts.client.gui.AuraScannerHudState;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -60,7 +60,7 @@ public class PokedexUsageContext {
     private PokedexLearnedInformation newPokemonInfo = PokedexLearnedInformation.NONE;
     private PokedexType type = PokedexType.RED;
     private List<Boolean> availableInfoFrames = new ArrayList<>(Arrays.asList(null, null, null, null));
-    private final PokedexScannerRendererImpl renderer = new PokedexScannerRendererImpl();
+    //private final PokedexScannerRendererImpl renderer = new PokedexScannerRendererImpl();
 
     public void stopUsing(int ticksInUse) {
         stopUsing(ticksInUse, null);
@@ -76,7 +76,7 @@ public class PokedexUsageContext {
 
     public void renderUpdate(GuiGraphics graphics, DeltaTracker tickCounter) {
         float tickDelta = Minecraft.getInstance().isPaused() ? 0.0F : tickCounter.getRealtimeDeltaTicks();
-        float updateInterval = (tickDelta / 20.0F) * AbstractModeLogic.RENDER_UPDATES_PER_SECOND;
+        float updateInterval = (tickDelta / 20.0F) * AuraScannerHudState.RENDER_UPDATES_PER_SECOND;
 
         if (scanningGuiOpen && viewInfoTicks < VIEW_INFO_BUFFER_TICKS) {
             if (transitionIntervals < TRANSITION_INTERVALS) {
@@ -137,7 +137,7 @@ public class PokedexUsageContext {
             }
         }
 
-        renderer.renderScanOverlay(graphics, tickCounter.getRealtimeDeltaTicks());
+        //renderer.renderScanOverlay(graphics, tickCounter.getRealtimeDeltaTicks());
     }
 
     public void useTick(LocalPlayer user, int ticksInUse, boolean inUse) {
@@ -271,7 +271,7 @@ public class PokedexUsageContext {
 
         playSound(CobblemonSounds.POKEDEX_SCAN_ZOOM_INCREMENT);
         zoomLevel = Math.max(0.0F, Math.min(ZOOM_MAX_STEP, zoomLevel + (float) verticalScrollAmount));
-        AbstractModeLogic.innerRingRotation = (AbstractModeLogic.innerRingRotation + 15) % 360;
+        AuraReaderManager.HUD_STATE.innerRingRotationVal = (AuraReaderManager.HUD_STATE.innerRingRotationVal + 15) % 360;
         double startLog = Math.log(ZOOM_BASE_FOV);
         double targetLog = Math.log(ZOOM_TARGET_FOV);
         double stepSize = (startLog - targetLog) / ZOOM_MAX_STEP;
@@ -338,5 +338,5 @@ public class PokedexUsageContext {
     public List<Boolean> getAvailableInfoFrames() { return availableInfoFrames; }
     public void setAvailableInfoFrames(List<Boolean> availableInfoFrames) { this.availableInfoFrames = availableInfoFrames; }
 
-    public PokedexScannerRendererImpl getRenderer() { return renderer; }
+    //public PokedexScannerRendererImpl getRenderer() { return renderer; }
 }

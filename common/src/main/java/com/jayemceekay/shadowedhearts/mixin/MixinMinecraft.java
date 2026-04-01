@@ -30,6 +30,9 @@ public class MixinMinecraft {
         }
 
         if (checkScreen instanceof TitleScreen && !shadowedhearts$checkedIris) {
+            if (!ShadowedHeartsConfigs.getInstance().getClientConfig().isLoaded()) {
+                return;
+            }
             shadowedhearts$checkedIris = true;
             if (ShadowedHeartsConfigs.getInstance().getClientConfig().skipIrisWarning()) {
                 return;

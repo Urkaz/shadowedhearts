@@ -51,6 +51,8 @@ public interface IShadowConfig extends IModConfig {
     // Aura Scanner
     default int auraScannerShadowRange() { return 128; }
     default int auraScannerMeteoroidRange() { return 256; }
+    default int trailMinNodeDistance() { return 32; }
+    default int trailMaxNodeDistance() { return 64; }
     default boolean auraReaderRequiredForAura() { return true; }
 
     // Aura Lock (scanner lock to prevent despawn)

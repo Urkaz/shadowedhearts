@@ -4,7 +4,10 @@ import com.cobblemon.mod.common.api.pokeball.PokeBalls;
 import com.cobblemon.mod.common.item.PokeBallItem;
 import com.jayemceekay.shadowedhearts.Shadowedhearts;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
-import com.jayemceekay.shadowedhearts.content.items.*;
+import com.jayemceekay.shadowedhearts.content.items.AuraReaderItem;
+import com.jayemceekay.shadowedhearts.content.items.PurifiedGemItem;
+import com.jayemceekay.shadowedhearts.content.items.ScentItem;
+import com.jayemceekay.shadowedhearts.content.items.SnagMachineItem;
 import com.jayemceekay.shadowedhearts.integration.mega_showdown.MegaShowdownBridgeHolder;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -120,12 +123,6 @@ public final class ModItems {
     public static final RegistrySupplier<Item> DIRECTION_ARROW = ITEMS.register(
             "direction_arrow",
             () -> new Item(new Item.Properties()));
-
-    // Upgrades
-    public static final RegistrySupplier<Item> THUNDERSTONE_BATTERY = ITEMS.register(
-            "thunderstone_battery",
-            () -> new ThunderstoneBatteryItem(new Item.Properties().arch$tab(ModCreativeTabs.SHADOWED_HEARTS_TAB).stacksTo(1))
-    );
 
     public static final RegistrySupplier<Item> POKEDEX_INTEGRATOR = ITEMS.register(
             "pokedex_integrator",

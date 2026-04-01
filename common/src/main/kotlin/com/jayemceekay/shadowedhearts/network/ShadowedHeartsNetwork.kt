@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.net.NetworkPacket
 import com.cobblemon.mod.common.net.PacketRegisterInfo
 import com.jayemceekay.shadowedhearts.client.network.AuraScannerClientHandler
 import com.jayemceekay.shadowedhearts.client.network.MeteoroidScanResultClientHandler
+import com.jayemceekay.shadowedhearts.client.network.TrailSyncClientHandler
 import com.jayemceekay.shadowedhearts.network.aura.*
 import com.jayemceekay.shadowedhearts.network.purification.*
 import com.jayemceekay.shadowedhearts.network.purification.client.*
@@ -12,6 +13,9 @@ import com.jayemceekay.shadowedhearts.network.purification.server.MovePurificati
 import com.jayemceekay.shadowedhearts.network.purification.server.PurifyPokemonHandler
 import com.jayemceekay.shadowedhearts.network.purification.server.UnlinkPlayerFromPurificationChamberHandler
 import com.jayemceekay.shadowedhearts.network.snag.*
+import com.jayemceekay.shadowedhearts.network.trail.EvidenceScanCompleteC2SPacket
+import com.jayemceekay.shadowedhearts.network.trail.EvidenceScanCompleteHandler
+import com.jayemceekay.shadowedhearts.network.trail.TrailSyncS2CPacket
 import net.minecraft.server.level.ServerPlayer
 
 /**
@@ -36,6 +40,7 @@ object ShadowedHeartsNetwork {
         add(PacketRegisterInfo(PokemonPropertyUpdatePacket.ID, PokemonPropertyUpdatePacket::decode, PokemonPropertyUpdateHandler))
         add(PacketRegisterInfo(AuraScannerS2CPacket.ID, AuraScannerS2CPacket::decode, AuraScannerClientHandler))
         add(PacketRegisterInfo(MeteoroidScanResultPacket.ID, MeteoroidScanResultPacket::decode, MeteoroidScanResultClientHandler))
+        add(PacketRegisterInfo(TrailSyncS2CPacket.ID, TrailSyncS2CPacket::decode, TrailSyncClientHandler))
         add(PacketRegisterInfo(PlaySoundPacket.ID, PlaySoundPacket::decode, PlaySoundHandler))
     }
 
@@ -78,6 +83,7 @@ object ShadowedHeartsNetwork {
         add(PacketRegisterInfo(MeteoroidScanRequestPacket.ID, MeteoroidScanRequestPacket::decode, MeteoroidScanRequestHandler))
         add(PacketRegisterInfo(AuraLockC2SPacket.ID, AuraLockC2SPacket::decode, AuraLockHandler))
         add(PacketRegisterInfo(AuraTrackingStateC2SPacket.ID, AuraTrackingStateC2SPacket::decode, AuraTrackingStateHandler))
+        add(PacketRegisterInfo(EvidenceScanCompleteC2SPacket.ID, EvidenceScanCompleteC2SPacket::decode, EvidenceScanCompleteHandler))
     }
 
     @JvmStatic

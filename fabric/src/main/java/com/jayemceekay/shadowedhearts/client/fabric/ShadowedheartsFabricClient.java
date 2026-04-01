@@ -14,6 +14,7 @@ import com.jayemceekay.shadowedhearts.client.particle.RelicStoneMoteParticle;
 import com.jayemceekay.shadowedhearts.client.render.DepthCapture;
 import com.jayemceekay.shadowedhearts.client.render.HeldBallSnagGlowRenderer;
 import com.jayemceekay.shadowedhearts.client.sound.RelicStoneSoundManager;
+import com.jayemceekay.shadowedhearts.client.trail.TrailClientState;
 import com.jayemceekay.shadowedhearts.config.ClientConfig;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
 import com.jayemceekay.shadowedhearts.content.items.ScentItem;
@@ -69,13 +70,18 @@ public final class ShadowedheartsFabricClient implements ClientModInitializer {
         // Register keybinds
         ModKeybinds.init();
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_SCANNER);
+//        ModKeybindsPlatformImpl.register(ModKeybinds.AURA_MODE_SELECTOR);
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_PULSE);
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_NEXT_SIGNAL);
         ModKeybindsPlatformImpl.register(ModKeybinds.AURA_PREV_SIGNAL);
+        ModKeybindsPlatformImpl.register(ModKeybinds.DEBUG_REINIT_HUD);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             AuraReaderManager.tick();
             AuraPulseRenderer.tick();
+            if (AuraReaderManager.isActive()) {
+                TrailClientState.INSTANCE.tick();
+            }
             RelicStoneSoundManager.tick();
         });
         HudRenderCallback.EVENT.register((guiGraphics, tickCounter) -> AuraReaderManager.render(guiGraphics, tickCounter.getGameTimeDeltaPartialTick(true)));
@@ -136,6 +142,17 @@ public final class ShadowedheartsFabricClient implements ClientModInitializer {
         WorldRenderEvents.AFTER_TRANSLUCENT.register(context -> {
             AuraEmitters.onRender(context.camera(), context.camera().getPartialTickTime());
             BallEmitters.onRender(context.camera(), context.camera().getPartialTickTime());
+
+            // Shadow aura trail tube rendering — only when Aura Reader HUD is active
+            var mc = Minecraft.getInstance();
+            if (mc.level != null && AuraReaderManager.isActive()) {
+                PoseStack pose = context.matrixStack();
+                var buffers = mc.renderBuffers().bufferSource();
+                float pt = context.camera().getPartialTickTime();
+                float hudAlpha = AuraReaderManager.HUD_STATE.fadeAmountVal;
+                TrailClientState.INSTANCE.render(pt, pose, buffers, hudAlpha);
+                buffers.endBatch();
+            }
         });
 
         WorldRenderEvents.END.register(worldRenderContext -> {

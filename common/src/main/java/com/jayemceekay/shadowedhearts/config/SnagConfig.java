@@ -19,106 +19,127 @@ public final class SnagConfig implements ISnagConfig {
 
     @Override
     public int energyPerAttempt() {
+        if (!isLoaded()) return ISnagConfig.super.energyPerAttempt();
         return DATA.energyPerAttempt.get();
     }
 
     @Override
     public int toggleCooldownTicks() {
+        if (!isLoaded()) return ISnagConfig.super.toggleCooldownTicks();
         return DATA.toggleCooldownTicks.get();
     }
 
     @Override
     public boolean rechargeOnVictory() {
+        if (!isLoaded()) return ISnagConfig.super.rechargeOnVictory();
         return DATA.rechargeOnVictory.get();
     }
 
     @Override
     public boolean rechargeInPvp() {
+        if (!isLoaded()) return ISnagConfig.super.rechargeInPvp();
         return DATA.rechargeInPvp.get();
     }
 
     @Override
     public int rechargeBase() {
+        if (!isLoaded()) return ISnagConfig.super.rechargeBase();
         return DATA.rechargeBase.get();
     }
 
     @Override
     public double rechargePerLevel() {
+        if (!isLoaded()) return ISnagConfig.super.rechargePerLevel();
         return DATA.rechargePerLevel.get();
     }
 
     @Override
     public int rechargePerNpc() {
+        if (!isLoaded()) return ISnagConfig.super.rechargePerNpc();
         return DATA.rechargePerNpc.get();
     }
 
     @Override
     public int rechargeMin() {
+        if (!isLoaded()) return ISnagConfig.super.rechargeMin();
         return DATA.rechargeMin.get();
     }
 
     @Override
     public int rechargeMax() {
+        if (!isLoaded()) return ISnagConfig.super.rechargeMax();
         return DATA.rechargeMax.get();
     }
 
     @Override
     public boolean auraReaderRechargeOnVictory() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargeOnVictory();
         return DATA.auraReaderRechargeOnVictory.get();
     }
 
     @Override
     public boolean auraReaderRechargeInPvp() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargeInPvp();
         return DATA.auraReaderRechargeInPvp.get();
     }
 
     @Override
     public int auraReaderRechargeBase() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargeBase();
         return DATA.auraReaderRechargeBase.get();
     }
 
     @Override
     public double auraReaderRechargePerLevel() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargePerLevel();
         return DATA.auraReaderRechargePerLevel.get();
     }
 
     @Override
     public int auraReaderRechargePerNpc() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargePerNpc();
         return DATA.auraReaderRechargePerNpc.get();
     }
 
     @Override
     public int auraReaderRechargeMin() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargeMin();
         return DATA.auraReaderRechargeMin.get();
     }
 
     @Override
     public int auraReaderRechargeMax() {
+        if (!isLoaded()) return ISnagConfig.super.auraReaderRechargeMax();
         return DATA.auraReaderRechargeMax.get();
     }
 
     @Override
     public int prototypeCapacity() {
+        if (!isLoaded()) return ISnagConfig.super.prototypeCapacity();
         return DATA.prototypeCapacity.get();
     }
 
     @Override
     public int advancedCapacity() {
+        if (!isLoaded()) return ISnagConfig.super.advancedCapacity();
         return DATA.advancedCapacity.get();
     }
 
     @Override
     public boolean failStackingBonus() {
+        if (!isLoaded()) return ISnagConfig.super.failStackingBonus();
         return DATA.snaggingPity.failStackingBonus.get();
     }
 
     @Override
     public double failBonusPerAttempt() {
+        if (!isLoaded()) return ISnagConfig.super.failBonusPerAttempt();
         return DATA.snaggingPity.failBonusPerAttempt.get();
     }
 
     @Override
     public double maxFailBonus() {
+        if (!isLoaded()) return ISnagConfig.super.maxFailBonus();
         return DATA.snaggingPity.maxFailBonus.get();
     }
 

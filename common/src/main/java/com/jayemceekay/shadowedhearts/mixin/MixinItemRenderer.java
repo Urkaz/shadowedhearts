@@ -25,6 +25,8 @@ public abstract class MixinItemRenderer {
     private void shadowedhearts$cancelHeadItemRender(
             LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, Level level, int i, int j, int k, CallbackInfo ci
     ) {
+        if(livingEntity == null) return;
+
         // Only suppress HEAD rendering
         if (itemDisplayContext == ItemDisplayContext.HEAD
                 && itemStack.getItem() instanceof AuraReaderItem) {

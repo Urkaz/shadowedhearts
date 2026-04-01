@@ -24,146 +24,187 @@ public final class ModConfig implements IShadowConfig {
 
     @Override
     public double shadowSpawnChancePercent() {
+        if (!isLoaded()) return IShadowConfig.super.shadowSpawnChancePercent();
         return DATA.shadowSpawnChancePercent.get();
     }
 
     @Override
     public List<? extends String> shadowSpawnBlacklist() {
+        if (!isLoaded()) return IShadowConfig.super.shadowSpawnBlacklist();
         return DATA.shadowSpawnBlacklist.get();
     }
 
     @Override
     public boolean hyperModeEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.hyperModeEnabled();
         return DATA.hyperMode.enabled.get();
     }
 
     @Override
     public boolean reverseModeEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.reverseModeEnabled();
         return DATA.reverseMode.enabled.get();
     }
 
     @Override
     public boolean goDamageModifierEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.goDamageModifierEnabled();
         return DATA.goDamageModifier.enabled.get();
     }
 
     @Override
     public boolean callButtonReducesHeartGauge() {
+        if (!isLoaded()) return IShadowConfig.super.callButtonReducesHeartGauge();
         return DATA.callButton.reducesHeartGauge.get();
     }
 
     @Override
     public boolean callButtonAccuracyBoost() {
+        if (!isLoaded()) return IShadowConfig.super.callButtonAccuracyBoost();
         return DATA.callButton.accuracyBoost.get();
     }
 
     @Override
     public boolean callButtonRemoveSleep() {
+        if (!isLoaded()) return IShadowConfig.super.callButtonRemoveSleep();
         return DATA.callButton.removeSleep.get();
     }
 
     @Override
     public int scentCooldownSeconds() {
+        if (!isLoaded()) return IShadowConfig.super.scentCooldownSeconds();
         return DATA.scent.cooldownSeconds.get();
     }
 
     @Override
     public boolean expandedScentSystemEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.expandedScentSystemEnabled();
         return DATA.scent.expandedSystemEnabled.get();
     }
 
     @Override
     public boolean superEffectiveShadowMovesEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.superEffectiveShadowMovesEnabled();
         return DATA.shadowMoves.superEffectiveEnabled.get();
     }
 
     @Override
     public String shadowMovesReplaceCount() {
+        if (!isLoaded()) return IShadowConfig.super.shadowMovesReplaceCount();
         return DATA.shadowMoves.replaceCount.get();
     }
 
     @Override
     public boolean shadowMovesOnlyShadowRush() {
+        if (!isLoaded()) return IShadowConfig.super.shadowMovesOnlyShadowRush();
         return DATA.shadowMoves.onlyShadowRush.get();
     }
 
     @Override
     public String shadowIVMode() {
+        if (!isLoaded()) return IShadowConfig.super.shadowIVMode();
         return DATA.shadowStatChanges.ivMode.get();
     }
 
     @Override
     public int shadowFixedPerfectIVs() {
+        if (!isLoaded()) return IShadowConfig.super.shadowFixedPerfectIVs();
         return DATA.shadowStatChanges.fixedPerfectIVs.get();
     }
 
     @Override
     public int shadowMaxPerfectIVs() {
+        if (!isLoaded()) return IShadowConfig.super.shadowMaxPerfectIVs();
         return DATA.shadowStatChanges.maxPerfectIVs.get();
     }
 
     @Override
     public boolean shadowCatchRateScaleEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.shadowCatchRateScaleEnabled();
         return DATA.shadowStatChanges.catchRateScaleEnabled.get();
     }
 
     @Override
     public double shadowCatchRateMinMultiplier() {
+        if (!isLoaded()) return IShadowConfig.super.shadowCatchRateMinMultiplier();
         return DATA.shadowStatChanges.catchRateMinMultiplier.get();
     }
 
     @Override
     public double shadowCatchRateExponent() {
+        if (!isLoaded()) return IShadowConfig.super.shadowCatchRateExponent();
         return DATA.shadowStatChanges.catchRateExponent.get();
     }
 
     @Override
     public boolean rctIntegrationEnabled() {
+        if (!isLoaded()) return IShadowConfig.super.rctIntegrationEnabled();
         return DATA.rctIntegration.enabled.get();
     }
 
     @Override
     public int relicStoneCooldownMinutes() {
+        if (!isLoaded()) return IShadowConfig.super.relicStoneCooldownMinutes();
         return DATA.relicStone.cooldownMinutes.get();
     }
 
     @Override
     public int purificationChamberStepRequirement() {
+        if (!isLoaded()) return IShadowConfig.super.purificationChamberStepRequirement();
         return DATA.purificationChamber.stepRequirement.get();
     }
 
     @Override
     public int auraScannerShadowRange() {
+        if (!isLoaded()) return IShadowConfig.super.auraScannerShadowRange();
         return DATA.auraScanner.auraScannerShadowRange.get();
     }
 
     @Override
     public int auraScannerMeteoroidRange() {
+        if (!isLoaded()) return IShadowConfig.super.auraScannerMeteoroidRange();
         return DATA.auraScanner.auraScannerMeteoroidRange.get();
     }
 
     @Override
+    public int trailMinNodeDistance() {
+        if (!isLoaded()) return IShadowConfig.super.trailMinNodeDistance();
+        return DATA.auraScanner.trailMinNodeDistance.get();
+    }
+
+    @Override
+    public int trailMaxNodeDistance() {
+        if (!isLoaded()) return IShadowConfig.super.trailMaxNodeDistance();
+        return DATA.auraScanner.trailMaxNodeDistance.get();
+    }
+
+    @Override
     public boolean auraReaderRequiredForAura() {
+        if (!isLoaded()) return IShadowConfig.super.auraReaderRequiredForAura();
         return DATA.auraScanner.auraReaderRequiredForAura.get();
     }
 
     @Override
     public int auraLockMaxSeconds() {
+        if (!isLoaded()) return IShadowConfig.super.auraLockMaxSeconds();
         return DATA.auraScanner.auraLockMaxSeconds.get();
     }
 
     @Override
     public int auraLockRange() {
+        if (!isLoaded()) return IShadowConfig.super.auraLockRange();
         return DATA.auraScanner.auraLockRange.get();
     }
 
     @Override
     public boolean auraLockPersistsWhenAFK() {
+        if (!isLoaded()) return IShadowConfig.super.auraLockPersistsWhenAFK();
         return DATA.auraScanner.auraLockPersistsWhenAFK.get();
     }
 
     @Override
     public List<? extends String> heartGaugeMaxOverrides() {
+        if (!isLoaded()) return IShadowConfig.super.heartGaugeMaxOverrides();
         return DATA.heartGauge.maxOverrides.get();
     }
 
@@ -413,131 +454,157 @@ public final class ModConfig implements IShadowConfig {
 
         @Override
         public boolean shadowfallActive() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.shadowfallActive();
             return shadowfallActive.get();
         }
 
         @Override
         public int impactChanceOneInTicks() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.impactChanceOneInTicks();
             return impactChanceOneInTicks.get();
         }
 
         @Override
         public int civilizedHeatmapThreshold() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.civilizedHeatmapThreshold();
             return civilizedHeatmapThreshold.get();
         }
 
         @Override
         public int heatmapDecayTicks() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.heatmapDecayTicks();
             return heatmapDecayTicks.get();
         }
 
         @Override
         public double heatmapDecayAmount() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.heatmapDecayAmount();
             return heatmapDecayAmount.get();
         }
 
         @Override
         public int minImpactDistanceToPlayer() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.minImpactDistanceToPlayer();
             return minImpactDistanceToPlayer.get();
         }
 
         @Override
         public int maxImpactDistanceToPlayer() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.maxImpactDistanceToPlayer();
             return maxImpactDistanceToPlayer.get();
         }
 
         @Override
         public int minImpactDistanceToStructures() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.minImpactDistanceToStructures();
             return minImpactDistanceToStructures.get();
         }
 
         @Override
         public int minImpactDistanceToSpawn() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.minImpactDistanceToSpawn();
             return minImpactDistanceToSpawn.get();
         }
 
         @Override
         public int minCraterRadius() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.minCraterRadius();
             return minCraterRadius.get();
         }
 
         @Override
         public int maxCraterRadius() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.maxCraterRadius();
             return maxCraterRadius.get();
         }
 
         @Override
         public int heatmapPresenceRadius() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.heatmapPresenceRadius();
             return heatmapPresenceRadius.get();
         }
 
         @Override
         public int heatmapFlushIntervalTicks() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.heatmapFlushIntervalTicks();
             return heatmapFlushIntervalTicks.get();
         }
 
         @Override
         public int meteoroidImpactBroadcastRadius() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidImpactBroadcastRadius();
             return meteoroidImpactBroadcastRadius.get();
         }
 
         @Override
         public boolean meteoroidShadowTransformationEnabled() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationEnabled();
             return meteoroidShadowTransformationEnabled.get();
         }
 
         @Override
         public int meteoroidShadowTransformationRadius() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationRadius();
             return meteoroidShadowTransformationRadius.get();
         }
 
         @Override
         public int meteoroidShadowTransformationCheckIntervalTicks() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationCheckIntervalTicks();
             return meteoroidShadowTransformationCheckIntervalTicks.get();
         }
 
         @Override
         public double meteoroidShadowTransformationChancePerInterval() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationChancePerInterval();
             return meteoroidShadowTransformationChancePerInterval.get();
         }
 
         @Override
         public double meteoroidShadowTransformationExposureIncrease() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationExposureIncrease();
             return meteoroidShadowTransformationExposureIncrease.get();
         }
 
         @Override
         public double meteoroidShadowTransformationExposureDecay() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowTransformationExposureDecay();
             return meteoroidShadowTransformationExposureDecay.get();
         }
 
         @Override
         public double meteoroidShadowSpawnChanceMultiplier() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidShadowSpawnChanceMultiplier();
             return meteoroidShadowSpawnChanceMultiplier.get();
         }
 
         @Override
         public boolean meteoroidWorldGenEnabled() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidWorldGenEnabled();
             return meteoroidWorldGenEnabled.get();
         }
 
         @Override
         public int meteoroidSpacing() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidSpacing();
             return meteoroidSpacing.get();
         }
 
         @Override
         public int meteoroidSeparation() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidSeparation();
             return meteoroidSeparation.get();
         }
 
         @Override
         public List<? extends String> meteoroidBiomeBlacklist() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidBiomeBlacklist();
             return meteoroidBiomeBlacklist.get();
         }
 
         @Override
         public List<? extends String> meteoroidBiomeWhitelist() {
+            if (!ShadowedHeartsConfigs.getInstance().getShadowConfig().isLoaded()) return IWorldAlterationConfig.super.meteoroidBiomeWhitelist();
             return meteoroidBiomeWhitelist.get();
         }
     }
@@ -666,6 +733,8 @@ public final class ModConfig implements IShadowConfig {
     public static final class AuraScannerConfig {
         public ModConfigSpec.IntValue auraScannerShadowRange;
         public ModConfigSpec.IntValue auraScannerMeteoroidRange;
+        public ModConfigSpec.IntValue trailMinNodeDistance;
+        public ModConfigSpec.IntValue trailMaxNodeDistance;
         public ModConfigSpec.BooleanValue auraReaderRequiredForAura;
         public ModConfigSpec.IntValue auraLockMaxSeconds;
         public ModConfigSpec.IntValue auraLockRange;
@@ -679,6 +748,14 @@ public final class ModConfig implements IShadowConfig {
             auraScannerMeteoroidRange = builder
                     .comment("The range (in blocks) at which the Aura Scanner can detect Shadowfall meteoroids.")
                     .defineInRange("auraScannerMeteoroidRange", 256, 1, 512);
+
+            trailMinNodeDistance = builder
+                    .comment("The minimum distance (in blocks) between evidence nodes in a trail.")
+                    .defineInRange("trailMinNodeDistance", 8, 1, 64);
+
+            trailMaxNodeDistance = builder
+                    .comment("The maximum distance (in blocks) between evidence nodes in a trail.")
+                    .defineInRange("trailMaxNodeDistance", 18, 1, 128);
 
             auraReaderRequiredForAura = builder
                     .comment("Whether the Aura Reader is required to see Shadow Auras in the overworld.")

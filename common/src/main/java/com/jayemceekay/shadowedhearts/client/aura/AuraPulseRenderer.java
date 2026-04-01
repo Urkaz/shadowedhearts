@@ -175,58 +175,58 @@ public class AuraPulseRenderer {
             }
 
             int prevUnpackPbo = GL11.glGetInteger(GL21.GL_PIXEL_UNPACK_BUFFER_BINDING);
-            GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, pulsePboId);
-
-            // Grow capacity using next power of two to avoid frequent reallocs
-            if (pboCapacityTexels < requiredTexels) {
-                int newCapacity = nextPow2(requiredTexels);
-                newCapacity = Math.min(newCapacity, maxTextureSizeCached);
-                int newBytes = newCapacity * 16;
-                GL15.glBufferData(GL21.GL_PIXEL_UNPACK_BUFFER, newBytes, GL15.GL_STREAM_DRAW);
-                pboCapacityTexels = newCapacity;
-            }
-
-            // Map only the portion we will write this frame (guard against zero-length mapping)
-            int writeBytes = width * 16;
-            if (writeBytes > 0) {
-                ByteBuffer mapped = GL30.glMapBufferRange(
-                        GL21.GL_PIXEL_UNPACK_BUFFER,
-                        0,
-                        writeBytes,
-                        GL30.GL_MAP_WRITE_BIT | GL30.GL_MAP_INVALIDATE_RANGE_BIT
-                );
-
-                if (mapped != null) {
-                    mapped.clear();
-                    for (int i = 0; i < count; i++) {
-                        PulseInstance pulse = pulsesSnapshot.get(i);
-                        float radius = pulse.getRadius(partialTicks);
-                        Vector3f origin = new Vector3f((float) (pulse.origin.x - camPos.x), (float) (pulse.origin.y - camPos.y), (float) (pulse.origin.z - camPos.z));
-
-                        mapped.putFloat(origin.x);
-                        mapped.putFloat(origin.y);
-                        mapped.putFloat(origin.z);
-                        mapped.putFloat(radius);
-
-                        mapped.putFloat(pulse.r);
-                        mapped.putFloat(pulse.g);
-                        mapped.putFloat(pulse.b);
-                        mapped.putFloat(pulse.distance);
-                    }
-                    mapped.flip();
-                    GL15.glUnmapBuffer(GL21.GL_PIXEL_UNPACK_BUFFER);
-                }
-            }
-
-            // Bind the texture and ensure allocation to capacity (avoid resize churn on count changes)
-            RenderSystem.activeTexture(GL13.GL_TEXTURE2);
-            RenderSystem.bindTexture(pulseTextureId);
-
-            // Ensure pixel-store state is sane for PBO uploads (avoid inherited bad state from other render paths)
-            GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 4);
-            GL12.glPixelStorei(GL12.GL_UNPACK_ROW_LENGTH, 0);
-
             try {
+                GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, pulsePboId);
+
+                // Grow capacity using next power of two to avoid frequent reallocs
+                if (pboCapacityTexels < requiredTexels) {
+                    int newCapacity = nextPow2(requiredTexels);
+                    newCapacity = Math.min(newCapacity, maxTextureSizeCached);
+                    int newBytes = newCapacity * 16;
+                    GL15.glBufferData(GL21.GL_PIXEL_UNPACK_BUFFER, newBytes, GL15.GL_STREAM_DRAW);
+                    pboCapacityTexels = newCapacity;
+                }
+
+                // Map only the portion we will write this frame (guard against zero-length mapping)
+                int writeBytes = width * 16;
+                if (writeBytes > 0) {
+                    ByteBuffer mapped = GL30.glMapBufferRange(
+                            GL21.GL_PIXEL_UNPACK_BUFFER,
+                            0,
+                            writeBytes,
+                            GL30.GL_MAP_WRITE_BIT | GL30.GL_MAP_INVALIDATE_RANGE_BIT
+                    );
+
+                    if (mapped != null) {
+                        mapped.clear();
+                        for (int i = 0; i < count; i++) {
+                            PulseInstance pulse = pulsesSnapshot.get(i);
+                            float radius = pulse.getRadius(partialTicks);
+                            Vector3f origin = new Vector3f((float) (pulse.origin.x - camPos.x), (float) (pulse.origin.y - camPos.y), (float) (pulse.origin.z - camPos.z));
+
+                            mapped.putFloat(origin.x);
+                            mapped.putFloat(origin.y);
+                            mapped.putFloat(origin.z);
+                            mapped.putFloat(radius);
+
+                            mapped.putFloat(pulse.r);
+                            mapped.putFloat(pulse.g);
+                            mapped.putFloat(pulse.b);
+                            mapped.putFloat(pulse.distance);
+                        }
+                        mapped.flip();
+                        GL15.glUnmapBuffer(GL21.GL_PIXEL_UNPACK_BUFFER);
+                    }
+                }
+
+                // Bind the texture and ensure allocation to capacity (avoid resize churn on count changes)
+                RenderSystem.activeTexture(GL13.GL_TEXTURE2);
+                RenderSystem.bindTexture(pulseTextureId);
+
+                // Ensure pixel-store state is sane for PBO uploads (avoid inherited bad state from other render paths)
+                GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 4);
+                GL12.glPixelStorei(GL12.GL_UNPACK_ROW_LENGTH, 0);
+
                 if (allocatedTextureWidthCapacity != pboCapacityTexels) {
                     // Temporarily unbind PBO so this is a pure allocation (avoid INVALID_OPERATION on some drivers)
                     GL15.glBindBuffer(GL21.GL_PIXEL_UNPACK_BUFFER, 0);
@@ -292,6 +292,7 @@ public class AuraPulseRenderer {
             ModShaders.AURA_PULSE.clear();
             RenderSystem.enableDepthTest();
             RenderSystem.depthMask(true);
+            RenderSystem.activeTexture(GL13.GL_TEXTURE0);
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         } catch (Exception e) {
             e.printStackTrace();

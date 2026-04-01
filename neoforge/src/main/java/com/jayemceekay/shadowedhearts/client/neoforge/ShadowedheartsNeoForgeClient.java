@@ -8,11 +8,13 @@ import com.jayemceekay.shadowedhearts.client.ShadowedHeartsClient;
 import com.jayemceekay.shadowedhearts.client.aura.AuraEmitters;
 import com.jayemceekay.shadowedhearts.client.aura.AuraPulseRenderer;
 import com.jayemceekay.shadowedhearts.client.ball.BallEmitters;
+import com.jayemceekay.shadowedhearts.client.gui.AuraReaderHud;
 import com.jayemceekay.shadowedhearts.client.gui.AuraReaderManager;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteEmitters;
 import com.jayemceekay.shadowedhearts.client.particle.LuminousMoteParticle;
 import com.jayemceekay.shadowedhearts.client.particle.RelicStoneMoteParticle;
 import com.jayemceekay.shadowedhearts.client.render.HeldBallSnagGlowRenderer;
+import com.jayemceekay.shadowedhearts.client.trail.TrailClientState;
 import com.jayemceekay.shadowedhearts.config.ClientConfig;
 import com.jayemceekay.shadowedhearts.config.ShadowedHeartsConfigs;
 import com.jayemceekay.shadowedhearts.content.items.ScentItem;
@@ -43,6 +45,7 @@ public final class ShadowedheartsNeoForgeClient {
     public static void onClientSetup(final FMLClientSetupEvent event) {
         // Client-side common init
         ClientSetupSubscriber.onClientSetup(event);
+        AuraReaderHud.init();
     }
 
     public ShadowedheartsNeoForgeClient(ModContainer modContainer) {
@@ -61,9 +64,11 @@ public final class ShadowedheartsNeoForgeClient {
     public static void registerKeybinds(RegisterKeyMappingsEvent event) {
         ModKeybinds.init();
         event.register(ModKeybinds.AURA_SCANNER);
+//        event.register(ModKeybinds.AURA_MODE_SELECTOR);
         event.register(ModKeybinds.AURA_PULSE);
         event.register(ModKeybinds.AURA_NEXT_SIGNAL);
         event.register(ModKeybinds.AURA_PREV_SIGNAL);
+        event.register(ModKeybinds.DEBUG_REINIT_HUD);
     }
 
     public static void registerParticles(RegisterParticleProvidersEvent evt) {
@@ -139,6 +144,17 @@ public final class ShadowedheartsNeoForgeClient {
             var cam = e.getCamera();
             AuraEmitters.onRender(cam, cam.getPartialTickTime());
             BallEmitters.onRender(cam, cam.getPartialTickTime());
+
+            // Shadow aura trail tube rendering — only when Aura Reader HUD is active
+            var mc = Minecraft.getInstance();
+            if (mc.level != null && AuraReaderManager.isActive()) {
+                PoseStack pose = e.getPoseStack();
+                var buffers = mc.renderBuffers().bufferSource();
+                float pt = cam.getPartialTickTime();
+                float hudAlpha = AuraReaderManager.HUD_STATE.fadeAmountVal;
+                TrailClientState.INSTANCE.render(pt, pose, buffers, hudAlpha);
+                buffers.endBatch();
+            }
         } else if (e.getStage() == RenderLevelStageEvent.Stage.AFTER_LEVEL && (AuraPulseRenderer.IRIS_HANDLER == null || !AuraPulseRenderer.IRIS_HANDLER.isShaderPackInUse())) {
             var cam = e.getCamera();
             AuraPulseRenderer.onRenderWorld(cam, e.getProjectionMatrix(), e.getModelViewMatrix(), cam.getPartialTickTime());

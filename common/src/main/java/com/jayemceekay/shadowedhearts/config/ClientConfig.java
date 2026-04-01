@@ -78,16 +78,19 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
 
     @Override
     public boolean enableShadowAura() {
+        if (!isLoaded()) return IClientConfig.super.enableShadowAura();
         return DATA.enableShadowAura.get();
     }
 
     @Override
     public boolean auraScannerEnabled() {
+        if (!isLoaded()) return IClientConfig.super.auraScannerEnabled();
         return DATA.auraScannerEnabled.get();
     }
 
     @Override
     public boolean skipIrisWarning() {
+        if (!isLoaded()) return IClientConfig.super.skipIrisWarning();
         return DATA.skipIrisWarning.get();
     }
 
@@ -99,11 +102,13 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
 
     @Override
     public float auraReaderYOffset() {
+        if (!isLoaded()) return IClientConfig.super.auraReaderYOffset();
         return DATA.auraReaderYOffset.get().floatValue();
     }
 
     @Override
     public boolean useFahrenheitDisplay() {
+        if (!isLoaded()) return IClientConfig.super.useFahrenheitDisplay();
         return DATA.useFahrenheitDisplay.get();
     }
 
@@ -114,31 +119,37 @@ public final class ClientConfig implements IClientConfig, ISoundConfig {
 
     @Override
     public float shadowAuraInitialBurstVolume() {
+        if (!isLoaded()) return ISoundConfig.super.shadowAuraInitialBurstVolume();
         return DATA.shadowAuraInitialBurstVolume.get().floatValue();
     }
 
     @Override
     public float shadowAuraLoopVolume() {
+        if (!isLoaded()) return ISoundConfig.super.shadowAuraLoopVolume();
         return DATA.shadowAuraLoopVolume.get().floatValue();
     }
 
     @Override
     public float auraScannerBeepVolume() {
+        if (!isLoaded()) return ISoundConfig.super.auraScannerBeepVolume();
         return DATA.auraScannerBeepVolume.get().floatValue();
     }
 
     @Override
     public float relicShrineLoopVolume() {
+        if (!isLoaded()) return ISoundConfig.super.relicShrineLoopVolume();
         return DATA.relicShrineLoopVolume.get().floatValue();
     }
 
     @Override
     public float auraReaderEquipVolume() {
+        if (!isLoaded()) return ISoundConfig.super.auraReaderEquipVolume();
         return DATA.auraReaderEquipVolume.get().floatValue();
     }
 
     @Override
     public float auraReaderUnequipVolume() {
+        if (!isLoaded()) return ISoundConfig.super.auraReaderUnequipVolume();
         return DATA.auraReaderUnequipVolume.get().floatValue();
     }
 

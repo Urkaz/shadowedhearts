@@ -50,6 +50,13 @@ public final class ModShadersPlatformImpl {
                         program -> ModShaders.BALL_TRAIL = program
                 );
 
+                // Shadow aura trail (fullscreen quad, sphere-traced SDF raymarching)
+                registrationContext.register(
+                        ResourceLocation.parse("shadowedhearts:aura/shadow_aura_trail"),
+                        DefaultVertexFormat.POSITION,
+                        program -> ModShaders.SHADOW_AURA_TRAIL = program
+                );
+
                 registrationContext.register(
                         ResourceLocation.parse("shadowedhearts:aura/aura_pulse"),
                         DefaultVertexFormat.POSITION_TEX,
