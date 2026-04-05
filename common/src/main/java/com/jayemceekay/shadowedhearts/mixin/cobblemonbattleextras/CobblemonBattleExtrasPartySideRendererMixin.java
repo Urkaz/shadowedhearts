@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 // Only for >=1.7.41
 // PartyInfoSideRenderer renders the left and right side Pokémon party bars
 // The Mixin only changes the details from the tooltip
-@Mixin(value = PartyInfoSideRenderer.class, remap = false)
+@Mixin(PartyInfoSideRenderer.class)
 public class CobblemonBattleExtrasPartySideRendererMixin {
 
     @Unique
