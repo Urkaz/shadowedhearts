@@ -81,7 +81,8 @@ public class CobblemonBattleExtrasCustomBattleControllerMixin {
                 moveInfo.shadowedhearts$setMoveType(ElementalTypes.get("shadow-locked"));
                 originalPreviewLines.set(i, null);
             } else {
-                moveInfo.shadowedhearts$setTypeTextureX(0); // This is needed for the custom shadow icon to render correctly
+                if (ShadowGate.isShadowMoveId(moveId))
+                    moveInfo.shadowedhearts$setTypeTextureX(0); // This is needed for the custom shadow icon to render correctly
 
                 originalPreviewLines.set(i, previewLine);
             }
