@@ -8,6 +8,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Unique;
 
 @Pseudo
 @Mixin(value = BattleMoveSelection.MoveTile.class, remap = false)
@@ -28,6 +29,7 @@ public abstract class CobblemonBattleExtras_1_7_41_NewMoveTileTooltipMixin {
         original.call(context, tooltipX, tooltipY, anchorBottomY, tileBounds);
     }
 
+    @Unique
     private static boolean shadowedhearts$shouldMaskTooltip(BattleMoveSelection.MoveTile self) {
         InBattleMove m = self.getMove();
         var pokemon = self.getPokemon();
